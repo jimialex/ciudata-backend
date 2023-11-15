@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  django: &django
+    image: vicobits/yema-challenge:latest
+    restart: unless-stopped
+    depends_on:
+      - postgres
+      - redis
+    env_file:
+      - .envs/prod/django
+      - .envs/prod/postgres
+    ports:
+      - "8000:8000"
+    volumes:
+      - /srv/ciudata/htdocs:/htdocs
+
+  redis:
+    restart: unless-stopped
+    image: redis:5
+
+  celeryworker:
+    <<: *django
+    ports: []
+    command: /start-celeryworker
+
+  celerybeat:
+    <<: *django
+    ports: []
+    command: /start-celerybeat
+
+  flower:
+    <<: *django
+    ports:
+      - "5555:5555"
+    command: /start-flower
+
+  postgres:
+    restart: unless-stopped
+    image: postgres:14
+    env_file:
+      - .envs/prod/postgres
+    volumes:
+      - /srv/agendas/db:/var/lib/postgresql/data
