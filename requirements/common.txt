@@ -6,7 +6,7 @@ django==4.1.7
 #
 # C O N F I G U R A T I O N
 #
-django-environ==0.9.0  # https://github.com/joke2k/django-environ
+django-environ==0.11.2  # https://github.com/joke2k/django-environ
 whitenoise==6.3.0  # https://github.com/evansd/whitenoise
 django-allauth==0.52.0  # https://github.com/pennersr/django-allauth
 

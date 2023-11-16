@@ -12,7 +12,6 @@ from django.utils.translation import gettext_lazy as _
 from config.settings.components import PROJECT_PATH, env
 from os.path import join
 from typing import Dict, List, Tuple, Union
-DJANGO_HTDOCS_PATH = "/srv/ciudata/htdocs"
 
 
 #
@@ -180,6 +179,7 @@ TEMPLATES = [{
 # See: http://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
 # STATIC FILE CONFIGURATION
 # ------------------------------------------------------------------------------
+
 DJANGO_HTDOCS_PATH = env('DJANGO_HTDOCS_PATH', default=join(PROJECT_PATH, 'assets'))
 STATIC_ROOT = join(DJANGO_HTDOCS_PATH, 'static')
 STATIC_URL = '/static/'
