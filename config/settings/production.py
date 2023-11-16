@@ -7,10 +7,17 @@ This file is required and if development.py is present these
 values are overridden.
 https://docs.djangoproject.com/en/2.2/howto/deployment/
 """
-import logging
+from os.path import join, dirname
+from environ import environ
+
+PROJECT_PATH = dirname(dirname(dirname(__file__)))
+env = environ.Env()
+env_file = join(PROJECT_PATH, ".env")
+env.read_env(env_file)
 
 
-from config.settings.components import env
+
+#from config.settings.components import env
 from config.settings.components.common import *
 from config.settings.components.caches import *
 from config.settings.components.celery import *
