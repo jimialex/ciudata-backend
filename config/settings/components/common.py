@@ -150,7 +150,7 @@ DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL', default='Support <alex.cc1187@gma
 # ------------------------------------------------------------------------------
 TEMPLATES = [{
     'BACKEND': 'django.template.backends.django.DjangoTemplates',
-    "APP_DIRS": True,
+    # "APP_DIRS": True,
     'DIRS': [
         join(PROJECT_PATH, 'web/templates'),
     ],

@@ -7,6 +7,7 @@ This file is required and if development.py is present these
 values are overridden.
 https://docs.djangoproject.com/en/2.2/howto/deployment/
 """
+import logging
 
 
 from config.settings.components import env
@@ -20,8 +21,8 @@ from config.settings.components.rest_framework import *
 
 DEBUG = False
 
-ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default="app.ciudata.io")
-SECRET_KEY = env('DJANGO_SECRET_KEY')
+ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=["app.ciudata.io"])
+SECRET_KEY = env('DJANGO_SECRET_KEY', default="ToPwQx2sRijMzNT")
 
 #
 # TEMPLATE CONFIGURATION
@@ -82,6 +83,7 @@ INSTALLED_APPS += ('django_s3_storage', )  # noqa F405
 # AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
 # AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
 
+"""
 # https://github.com/etianen/django-s3-storage
 AWS_S3_BUCKET_NAME = env('AWS_S3_BUCKET_NAME')
 AWS_S3_BUCKET_NAME_STATIC = AWS_S3_BUCKET_NAME
@@ -100,3 +102,4 @@ STATICFILES_STORAGE = 'django_s3_storage.storage.StaticS3Storage'
 AWS_S3_CUSTOM_DOMAIN = '{0}.s3.amazonaws.com'.format(AWS_S3_BUCKET_NAME)
 STATIC_URL = 'https://{0}/static/'.format(AWS_S3_CUSTOM_DOMAIN)
 MEDIA_URL = 'https://{0}/media/'.format(AWS_S3_CUSTOM_DOMAIN)
+"""
