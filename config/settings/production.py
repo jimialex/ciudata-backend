@@ -10,7 +10,13 @@ https://docs.djangoproject.com/en/2.2/howto/deployment/
 
 
 from config.settings.components import env
-from config.settings.components.common import TEMPLATES, INSTALLED_APPS
+from config.settings.components.common import *
+from config.settings.components.caches import *
+from config.settings.components.celery import *
+from config.settings.components.preferences import *
+from config.settings.components.databases import *
+from config.settings.components.rest_framework import *
+
 
 DEBUG = False
 
@@ -94,4 +100,3 @@ STATICFILES_STORAGE = 'django_s3_storage.storage.StaticS3Storage'
 AWS_S3_CUSTOM_DOMAIN = '{0}.s3.amazonaws.com'.format(AWS_S3_BUCKET_NAME)
 STATIC_URL = 'https://{0}/static/'.format(AWS_S3_CUSTOM_DOMAIN)
 MEDIA_URL = 'https://{0}/media/'.format(AWS_S3_CUSTOM_DOMAIN)
-
