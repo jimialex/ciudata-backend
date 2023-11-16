@@ -8,13 +8,12 @@ https://docs.djangoproject.com/en/2.2/topics/settings/
 For the full list of settings and their config, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
-
-from typing import Dict, List, Tuple, Union
-from os.path import join
-
-from config.settings.components import PROJECT_PATH, env
-
 from django.utils.translation import gettext_lazy as _
+from config.settings.components import PROJECT_PATH, env
+from os.path import join
+from typing import Dict, List, Tuple, Union
+DJANGO_HTDOCS_PATH = "/srv/ciudata/htdocs"
+
 
 #
 # ADMIN SETTINGS

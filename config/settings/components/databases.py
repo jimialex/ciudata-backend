@@ -11,7 +11,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': env('POSTGRES_DB', default='ciudata'),
         'USER': env('POSTGRES_USER', default='ciudata'),
-        'PASSWORD': env('POSTGRES_PASSWORD', default='11002299338844775566'),
+        'PASSWORD': env('POSTGRES_PASSWORD', default='ciud4742023'),
         'HOST': env('POSTGRES_HOST', default='127.0.0.1'),
         'PORT': env('POSTGRES_PORT', default='5432'),
         'CONN_MAX_AGE': env('POSTGRES_CONN_MAX_AGE', default=60),
