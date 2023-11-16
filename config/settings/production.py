@@ -20,7 +20,7 @@ from config.settings.components.rest_framework import *
 
 DEBUG = False
 
-ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS')
+ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default="app.ciudata.io")
 SECRET_KEY = env('DJANGO_SECRET_KEY')
 
 #
