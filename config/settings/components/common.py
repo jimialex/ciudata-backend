@@ -78,6 +78,7 @@ THIRD_PARTY_APPS: Tuple[str, ...] = (
 LOCAL_APPS: Tuple[str, ...] = (
     'apps.contrib.app.ContribConfig',
     'apps.accounts.app.AccountsConfig',
+    'apps.ciudata.app.CiudataConfig',
 )
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

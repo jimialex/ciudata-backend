@@ -90,3 +90,9 @@ django-health-check==3.17.0 #https://pypi.org/project/django-health-check/#descr
 # T I M E Z O N E S
 #
 pytz==2022.7.1  # https://pythonhosted.org/pytz/
+#
+# I M P O R T  -   E X P O R T
+#
+openpyxl==3.1.2
+pandas==2.1.3
+utm==0.7.0

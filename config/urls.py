@@ -21,6 +21,9 @@ urlpatterns = [
     # Landing Page
     path('', TemplateView.as_view(template_name='home.html')),
 
+    # Ciudata App API
+    path('api/', include('apps.ciudata.api.urls', namespace='api-ciudata')),  # api
+
     # Accounts
     path('api/', include('apps.accounts.api.urls', namespace='api-accounts')),  # api
     path('', include('apps.accounts.urls', namespace='accounts')),  # transactions
