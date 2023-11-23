@@ -4,9 +4,9 @@
 """Django settings for server project.
 
 For more information on this file, see
-https://docs.djangoproject.com/en/2.2/topics/settings/
+https://docs.djangoproject.com/en/4.1.7/topics/settings/
 For the full list of settings and their config, see
-https://docs.djangoproject.com/en/2.2/ref/settings/
+https://docs.djangoproject.com/en/4.1.7/ref/settings/
 """
 from django.utils.translation import gettext_lazy as _
 from config.settings.components import PROJECT_PATH, env
