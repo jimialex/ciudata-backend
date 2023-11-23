@@ -17,6 +17,8 @@ from environ import environ
 from os.path import join, dirname
 
 PROJECT_PATH = dirname(dirname(dirname(__file__)))
+APPS_PATH = join(PROJECT_PATH, 'apps')
+
 env = environ.Env()
 env_file = join(PROJECT_PATH, ".env")
 env.read_env(env_file)
@@ -71,7 +73,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 # SECURE_HSTS_PRELOAD = True
 
-# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_SSL_REDIRECT = False
 
 # SESSION_COOKIE_SECURE = True
@@ -109,3 +111,7 @@ AWS_S3_CUSTOM_DOMAIN = '{0}.s3.amazonaws.com'.format(AWS_S3_BUCKET_NAME)
 STATIC_URL = 'https://{0}/static/'.format(AWS_S3_CUSTOM_DOMAIN)
 MEDIA_URL = 'https://{0}/media/'.format(AWS_S3_CUSTOM_DOMAIN)
 """
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://app.ciudata.io',
+]
