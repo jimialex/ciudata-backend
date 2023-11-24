@@ -2,11 +2,13 @@
 
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+from rest_framework import status
 
-from apps.accounts.api.v1.serializers.user import UserUpdateSerializer
+from apps.accounts.api.v1.serializers.user import UserUpdateSerializer, UserCreateSerializer
 from apps.accounts.api.v1.serializers.user_profile import UserProfileSerializer
 from apps.contrib.api.viewsets import PermissionViewSet
 from apps.accounts.services.user import UserService
+from apps.accounts.models.user import User
 
 
 class ProfileViewSet(PermissionViewSet):
@@ -31,3 +33,12 @@ class ProfileViewSet(PermissionViewSet):
 
         request.user.refresh_from_db()
         return Response(self.get_serializer(request.user).data)
+
+    def create_profile(self, request, *args, **kwargs):
+        """Crete new user"""
+
+        serializer = UserCreateSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        new_user = UserService.register_new_user(serializer.validated_data, is_active=True)
+        return Response(self.get_serializer(new_user).data, status=status.HTTP_200_OK)

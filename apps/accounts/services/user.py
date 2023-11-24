@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from apps.accounts.models import User
+from django.contrib.auth.models import Group
 
 
 class UserService:
@@ -31,6 +32,7 @@ class UserService:
     def register_new_user(cls, user_data, is_active=False):
         """Creates an user instance."""
         plain_password = user_data.pop('password')
+        group = user_data.pop('groups', None)
 
         if 'username' not in user_data and 'email' in user_data:
             user_data['username'] = user_data['email']
@@ -39,6 +41,9 @@ class UserService:
         user.is_active = is_active
         user.set_password(plain_password)
         user.save()
+
+        if group:
+            user.groups.set(group)
 
         return user
 

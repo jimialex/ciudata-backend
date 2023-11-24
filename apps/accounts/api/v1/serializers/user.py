@@ -5,6 +5,7 @@ from rest_framework.exceptions import ValidationError
 
 from apps.accounts import response_codes
 from apps.accounts.models import User
+from django.contrib.auth.models import Group
 
 PASSWORD_MAX_LENGTH = User._meta.get_field('password').max_length  # noqa: WPS437
 
@@ -13,6 +14,7 @@ user_read_only_fields = (
     'password', 'is_superuser', 'is_staff', 'is_active', 'date_joined',
     'email_token', 'token', 'groups', 'user_permissions',
 )
+
 
 class UserUpdateSerializer(serializers.ModelSerializer):
     """It helps to validate the user basic info updating."""
@@ -39,4 +41,20 @@ class UserUpdateSerializer(serializers.ModelSerializer):
             'first_name',
             'last_name',
             'photo',
+        )
+
+
+class UserCreateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = (
+            'username',
+            'first_name',
+            'last_name',
+            'password',
+            'photo',
+            'phone',
+            'email',
+            'groups',
         )

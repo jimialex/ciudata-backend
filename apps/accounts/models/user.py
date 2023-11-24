@@ -62,6 +62,12 @@ class User(AbstractUser):
         blank=True, null=True,
     )
 
+    phone = models.CharField(
+        verbose_name=_('Telefono/Celular'),
+        max_length=12,
+        blank=True, null=True,
+    )
+
     photo = ProcessedImageField(
         verbose_name=_('Photo'),
         upload_to='profiles/%Y/%m/%d',

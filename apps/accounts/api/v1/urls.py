@@ -64,8 +64,17 @@ urlpatterns = [
     # >> Users
 
     path(
+        'auth/register/user/',
+        ProfileViewSet.as_view({
+            'post': 'create_profile'
+        }),
+        name='user-create',
+    ),
+    path(
         'me/profile/',
-        ProfileViewSet.as_view({'get': 'get_profile', 'put': 'update_profile'}),
+        ProfileViewSet.as_view({
+            'get': 'get_profile', 'put': 'update_profile',
+        }),
         name='profile',
     ),
     path(
