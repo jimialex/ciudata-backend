@@ -10,9 +10,16 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     photo = serializers.CharField(source='photo_url')
     has_password = serializers.SerializerMethodField()
+    groups = serializers.SerializerMethodField()  # serializers.ListField(child=serializers.CharField(max_length=255))
 
     def get_has_password(self, user):
         return user.has_usable_password()
+
+    def get_groups(self, user):
+        if user.groups.exists():
+            return [group.name for group in user.groups.all()]
+        else:
+            return []
 
     class Meta:
         model = User
@@ -26,5 +33,6 @@ class UserProfileSerializer(serializers.ModelSerializer):
             'lang',
             'is_active',
             'has_password',
+            'groups',
         )
         read_only_fields = fields
