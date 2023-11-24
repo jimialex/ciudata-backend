@@ -4,8 +4,8 @@ from django.apps import AppConfig
 
 
 class CiudataConfig(AppConfig):
-    """Configuration for ciudata app."""
+    """Configuration for activos fijos functionalties."""
 
     name = 'apps.ciudata'
-    verbose_name = 'Ciudata'
-    verbose_name_plural = 'Ciudatas'
+    verbose_name = 'Modulo ciudata'
+    verbose_name_plural = 'Modulos ciudata'

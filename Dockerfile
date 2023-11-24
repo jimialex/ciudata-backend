@@ -60,12 +60,12 @@ RUN sed -i 's/\r$//g' /start-flower
 RUN chmod +x /start-flower
 
 
-ENTRYPOINT ["/entrypoint"]
+# ENTRYPOINT ["/entrypoint"]
 
 #
 #  C I / C D
 #
-FROM development as ci_cd
-
-RUN apk add make build-base
-RUN pip install docker-compose awscli
+#FROM development as ci_cd
+#
+#RUN apk add make build-base
+#RUN pip install docker-compose awscli

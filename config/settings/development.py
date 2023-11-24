@@ -11,7 +11,7 @@ import logging
 from typing import List
 
 from config.settings.components import env
-from config.settings.components.common import TEMPLATES, MIDDLEWARE, INSTALLED_APPS
+from config.settings.components.common import *  # TEMPLATES, MIDDLEWARE, INSTALLED_APPS
 
 DEBUG = True
 

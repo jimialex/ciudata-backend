@@ -2,6 +2,7 @@
 
 import uuid
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 class TimeStampedModelMixin(models.Model):
@@ -46,6 +47,53 @@ class UUIDPrimaryKeyModelMixin(models.Model):
         default=uuid.uuid4,
         editable=False,
     )
+
+    class Meta:
+        abstract = True
+
+##############################################################################################
+# Deletion mixin
+
+
+CREATED = "CREATED"
+DELETED = "DELETED"
+
+
+class DeletionManager(models.Manager):
+
+    def __init__(self, show_deleted):
+        self.show_deleted = show_deleted
+        return super(DeletionManager, self).__init__()
+
+    def get_queryset(self):
+        if self.show_deleted:
+            queryset = super(DeletionManager, self).get_queryset()
+        else:
+            queryset = super(DeletionManager, self).get_queryset().filter(db_status=CREATED)
+        return queryset
+
+
+class DeletionMixin(models.Model):
+
+    # @property
+    # def objects(self):
+    #     return DeletionManager(self.show_deleted)
+
+    DB_STATUS_KINDS = (
+        (CREATED, "Created"),
+        (DELETED, "Deleted"),
+    )
+
+    db_status = models.CharField(
+        verbose_name=_("Estado de existencia en la base de datos"),
+        max_length=20,
+        choices=DB_STATUS_KINDS,
+        default=CREATED
+    )
+
+    def delete(self):
+        self.db_status = DELETED
+        self.save()
 
     class Meta:
         abstract = True

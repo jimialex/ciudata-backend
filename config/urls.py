@@ -10,9 +10,9 @@ from apps.contrib.views.errors import error_400, error_403, error_404, error_500
 
 from django.contrib import admin
 
-admin.site.site_header = 'Wise'
-admin.site.site_title = 'Wise Admin'
-admin.site.index_title = 'Wise Admin'
+admin.site.site_header = 'Ciudata'
+admin.site.site_title = 'Ciudata Admin'
+admin.site.index_title = 'Ciudata Admin'
 
 urlpatterns = [
     # Django ADMIN
@@ -23,6 +23,7 @@ urlpatterns = [
 
     # Ciudata App API
     path('api/', include('apps.ciudata.api.urls', namespace='api-ciudata')),  # api
+    path('', include('apps.ciudata.urls', namespace='ciudata')),  # transactions
 
     # Accounts
     path('api/', include('apps.accounts.api.urls', namespace='api-accounts')),  # api

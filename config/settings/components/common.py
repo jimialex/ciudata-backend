@@ -156,10 +156,10 @@ TEMPLATES = [{
 
     'OPTIONS': {
         'debug': False,
-        # 'loaders': [
-        # 'django.template.loaders.filesystem.Loader',
-        # 'django.template.loaders.app_directories.Loader',
-        # ],
+        'loaders': [
+            'django.template.loaders.filesystem.Loader',
+            'django.template.loaders.app_directories.Loader',
+        ],
         'context_processors': [
             'django.template.context_processors.debug',
             'django.template.context_processors.request',
@@ -259,11 +259,13 @@ ADMINS = (
 )
 MANAGERS = ADMINS
 
-PROJECT_NAME = 'Wise API'
+PROJECT_NAME = 'Ciudata API'
 PROJECT_HOSTNAME = env('DJANGO_HOSTNAME', default='http://localhost:8000')
 PROJECT_AUTHOR = 'Support <{0}>'.format(PROJECT_SUPPORT_EMAIL)
-PROJECT_OWNER = 'Wise'
+PROJECT_OWNER = 'Ciudata'
 PROJECT_OWNER_DOMAIN = PROJECT_HOSTNAME
 PROJECT_DESCRIPTION = 'Django Template with steroids'
 PROJECT_SUPPORT_PHONE = '(+591) 73234523'
 PROJECT_TERMS_URL = '{0}/terms'.format(PROJECT_HOSTNAME)
+
+# sudo ifconfig lo:0 10.10.10.10 netmask 255.255.255.0 up
