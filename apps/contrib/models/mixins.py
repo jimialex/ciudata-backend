@@ -3,6 +3,7 @@
 import uuid
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from apps.contrib.utils.strings import get_uuid
 
 
 class TimeStampedModelMixin(models.Model):
@@ -33,6 +34,20 @@ class SlugModelMixin(models.Model):
     """An abstract base class model that provides a slug field."""
 
     slug = models.SlugField(max_length=255, unique=True)
+
+    class Meta:
+        abstract = True
+
+
+class Slug10ModelMixin(models.Model):
+    """An abstract base class model that provides a slug field."""
+
+    slug = models.SlugField(
+        verbose_name=_("Slug"),
+        default=get_uuid,
+        db_index=True,
+        unique=True,
+    )
 
     class Meta:
         abstract = True

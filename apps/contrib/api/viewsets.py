@@ -51,9 +51,10 @@ class ModelRetrieveListViewSet(  # noqa: WPS215
     """Enables list and retrieve methods with permissions."""
 
 
-class ModelRetrieveUpdateListViewSet(  # noqa: WPS215
+class ModelRetrieveUpdateDeleteListViewSet(  # noqa: WPS215
     mixins.RetrieveModelMixin,
     mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
     mixins.ListModelMixin,
     GenericViewSet,
 ):

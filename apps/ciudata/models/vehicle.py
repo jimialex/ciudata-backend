@@ -7,13 +7,15 @@ from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
 from django.utils.translation import gettext_lazy as _
 from django.db.models import JSONField
+from apps.contrib.utils.strings import get_uuid
 
 
-class Vehicle(TimeStampedModelMixin, SlugModelMixin, DeletionMixin):
+class Vehicle(TimeStampedModelMixin, Slug10ModelMixin, DeletionMixin):
     """ This class is to vehicle model"""
     plate = models.CharField(
         verbose_name=_('Placa'),
         max_length=8,
+        unique=True,
     )
 
     brand = models.CharField(
