@@ -12,7 +12,12 @@ class AreaSerializer(serializers.ModelSerializer):
 class RouteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Route
-        fields = '__all_'
+        fields = [
+            'slug',
+            'name',
+            'area',
+            'geo_route',
+        ]
 
 
 class AssignedRoute(serializers.ModelSerializer):

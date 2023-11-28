@@ -13,6 +13,7 @@ from apps.ciudata.api.v1.serializers.vehicle import VehicleSerializer
 from apps.ciudata.models.vehicle import *
 from apps.contrib.api.responses import DoneResponse
 from apps.ciudata.api.v1 import codes
+from django.core.exceptions import ObjectDoesNotExist
 CREATED = "CREATED"
 
 

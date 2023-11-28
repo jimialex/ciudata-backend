@@ -19,6 +19,8 @@ class VehicleSerializer(serializers.ModelSerializer):
 
 
 class AssignedVehicleSerializer(serializers.ModelSerializer):
+    vehicle = VehicleSerializer()
+
     class Meta:
         model = AssignedVehicle
-        fields = '__all_'
+        fields = ('vehicle',)
