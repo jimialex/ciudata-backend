@@ -62,6 +62,7 @@ THIRD_PARTY_APPS: Tuple[str, ...] = (
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
     # 'django_http_referrer_policy',
+    'django_filters',
 
     # Async Tasks
     'django_celery_beat',

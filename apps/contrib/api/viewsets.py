@@ -2,6 +2,8 @@
 
 from rest_framework import mixins
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
+from rest_framework import status, pagination
+from rest_framework.response import Response
 
 
 class PermissionlMixin(object):
@@ -81,3 +83,25 @@ class PermissionModelViewSet(PermissionlMixin, ModelViewSet):
 
 class PermissionViewSet(PermissionlMixin, GenericViewSet):
     """Enables standar view methods with permissions."""
+
+
+class MixinPagination(pagination.PageNumberPagination):
+    page_size = 50
+    page_size_query_param = 'page_size'
+    max_page_size = 100
+    page_query_param = 'page'
+    page_link_template = 'page={page_number}'
+
+    def get_paginated_response(self, data):
+        return Response({
+            "next": self.get_next_link(),
+            "previous": self.get_previous_link(),
+            "count": self.page.paginator.count,
+            "total_pages": self.page.paginator.num_pages,
+            "page_number": self.page.number,
+            "page_size": self.page.paginator.per_page,
+            "results": data,
+        })
+
+    def set_page_size(self, size):
+        self.page_size = size
