@@ -184,6 +184,7 @@ TEMPLATES = [{
 
 DJANGO_HTDOCS_PATH = env('DJANGO_HTDOCS_PATH', default=join(PROJECT_PATH, 'assets'))
 STATIC_ROOT = join(DJANGO_HTDOCS_PATH, 'static')
+print("\n\n URL HTDOCS ", DJANGO_HTDOCS_PATH)
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     join(PROJECT_PATH, 'web/static'),
@@ -200,6 +201,7 @@ STATICFILES_FINDERS = (
 # ------------------------------------------------------------------------------
 MEDIA_ROOT = join(DJANGO_HTDOCS_PATH, 'media')
 MEDIA_URL = '/media/'
+print("\n\n URL HTDOCS MEDIA", MEDIA_ROOT)
 
 
 # PASSWORDS

@@ -7,12 +7,14 @@ This file is required and if development.py is present these
 values are overridden.
 https://docs.djangoproject.com/en/2.2/howto/deployment/
 """
+from config.settings.components import env
 from config.settings.components.common import *
 from config.settings.components.caches import *
 from config.settings.components.celery import *
 from config.settings.components.preferences import *
 from config.settings.components.databases import *
 from config.settings.components.rest_framework import *
+"""
 from environ import environ
 from os.path import join, dirname
 
@@ -22,14 +24,12 @@ APPS_PATH = join(PROJECT_PATH, 'apps')
 env = environ.Env()
 env_file = join(PROJECT_PATH, ".env")
 env.read_env(env_file)
-
-
-# from config.settings.components import env
+"""
 
 
 DEBUG = False
 
-ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=["app.ciudata.io", '64.176.4.7'])
+ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS')#, default=["app.ciudata.io", '64.176.4.7'])
 SECRET_KEY = env('DJANGO_SECRET_KEY', default="ToPwQx2sRijMzNT")
 
 #
