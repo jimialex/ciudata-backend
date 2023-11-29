@@ -64,30 +64,18 @@ VEHICLE_DELETED = {
     "code": "vehicle_deleted",
     "detail": _("Vehículo Eliminado"),
 }
+ROUTE_DELETED = {
+    "code": "route_deleted",
+    "detail": _("Ruta Eliminada"),
+}
+AREA_DELETED = {
+    "code": "area_deleted",
+    "detail": _("AREA Eliminada"),
+}
 
 CLIENT_DELETED = {
     "code": "client_deleted",
     "detail": _("Cliente Eliminado"),
-}
-
-PROVIDER_DELETED = {
-    "code": "provider_deleted",
-    "detail": _("Proveedor Eliminado"),
-}
-
-EMPLOYEE_DELETED = {
-    "code": "employee_deleted",
-    "detail": _("Empleado Eliminado"),
-}
-
-RESOURCE_DELETED = {
-    "code": "resource_deleted",
-    "detail": _("Recurso Eliminado"),
-}
-
-TRANSACTION_DELETED = {
-    "code": "transaction_deleted",
-    "detail": _("Transacción Eliminada"),
 }
 
 NO_PREVIOUS_TRANSACTION = {

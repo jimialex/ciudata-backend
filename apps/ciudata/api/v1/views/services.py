@@ -21,4 +21,4 @@ class ConversorApiView(APIView):
         # Convert the coordinates to GPS points using the specified UTM zone
         array_lat_long = coordinates_conversor(coordinates, utm_zone=19)  # utm_zone=19 es para nuestra region
 
-        return Response({"coordenadas": array_lat_long}, status=status.HTTP_200_OK)
+        return Response(array_lat_long, status=status.HTTP_200_OK)

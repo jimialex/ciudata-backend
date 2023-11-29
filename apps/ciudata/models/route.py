@@ -7,7 +7,7 @@ from django.db.models import JSONField
 from django.utils.translation import gettext_lazy as _
 
 
-class Area(TimeStampedModelMixin, SlugModelMixin, DeletionMixin):
+class Area(TimeStampedModelMixin, Slug10ModelMixin, DeletionMixin):
     """ This class is to Area model"""
     name = models.CharField(
         verbose_name=_('Nombre'),
@@ -30,7 +30,7 @@ class Area(TimeStampedModelMixin, SlugModelMixin, DeletionMixin):
         app_label = 'ciudata'
 
 
-class Route(TimeStampedModelMixin, SlugModelMixin, DeletionMixin):
+class Route(TimeStampedModelMixin, Slug10ModelMixin, DeletionMixin):
     """ This class is to Ruta model"""
     name = models.CharField(
         verbose_name=_('Nombre'),
@@ -65,7 +65,7 @@ COMPLETED = "Comleted"
 CANCELLED = "Deleted"
 
 
-class AssignedRoute(TimeStampedModelMixin, SlugModelMixin):
+class AssignedRoute(TimeStampedModelMixin, Slug10ModelMixin):
     """ This class is to Assigned Route model"""
     STATUS_KINDS = (
         (ASSIGNED, "Asigned"),

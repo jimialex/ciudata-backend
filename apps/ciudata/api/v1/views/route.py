@@ -9,41 +9,52 @@ from rest_framework import status
 from apps.contrib.api.viewsets import (PermissionViewSet,
                                        ModelCreateListViewSet,
                                        MixinPagination, ModelRetrieveUpdateDeleteListViewSet)
-from apps.ciudata.api.v1.serializers.vehicle import VehicleSerializer
-from apps.ciudata.models.vehicle import *
+from apps.ciudata.api.v1.serializers.route import *
+from apps.ciudata.models.route import *
 from apps.contrib.api.responses import DoneResponse
 from apps.ciudata.api.v1 import codes
-from django.core.exceptions import ObjectDoesNotExist
 CREATED = "CREATED"
 
 
-class VehiclesViewSet(PermissionViewSet, ModelCreateListViewSet):
+class AreasViewSet(PermissionViewSet, ModelCreateListViewSet, ModelRetrieveUpdateDeleteListViewSet):
     """Contains all users endpoints."""
 
-    serializer_class = VehicleSerializer
+    serializer_class = AreaSerializer
     permission_classes = [IsAuthenticated]
     filter_backends = [filters.SearchFilter,
                        filters.OrderingFilter,
                        DjangoFilterBackend]
-    search_fields = [
-        'plate', 'brand', 'model',
-    ]
-    filterset_fields = ['plate']
+    search_fields = ['name']
+    filterset_fields = ['name']
     ordering_fields = '__all__'
-    queryset = Vehicle.objects.filter(db_status=CREATED)
-    pagination_class = MixinPagination
-
-
-class VehicleViewSet(PermissionViewSet, ModelRetrieveUpdateDeleteListViewSet):
-    """Contains all users endpoints."""
-
-    serializer_class = VehicleSerializer
-    permission_classes = [IsAuthenticated]
-    queryset = Vehicle.objects.filter(db_status=CREATED)
     lookup_field = 'slug'
+    queryset = Area.objects.filter(db_status=CREATED)
     pagination_class = MixinPagination
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
         self.perform_destroy(instance)
-        return DoneResponse(**codes.VEHICLE_DELETED)
+        return DoneResponse(**codes.AREA_DELETED)
+
+
+class RoutesViewSet(PermissionViewSet, ModelCreateListViewSet, ModelRetrieveUpdateDeleteListViewSet):
+    """Contains all users endpoints."""
+
+    serializer_class = RouteSerializer
+    permission_classes = [IsAuthenticated]
+    filter_backends = [filters.SearchFilter,
+                       filters.OrderingFilter,
+                       DjangoFilterBackend]
+    search_fields = [
+        'name', 'area__name',
+    ]
+    filterset_fields = ['name']
+    ordering_fields = '__all__'
+    queryset = Route.objects.filter(db_status=CREATED)
+    pagination_class = MixinPagination
+    lookup_field = 'slug'
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return DoneResponse(**codes.ROUTE_DELETED)

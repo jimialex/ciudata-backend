@@ -6,7 +6,7 @@ from apps.ciudata.models import Area, Route, AssignedRoute
 class AreaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Area
-        fields = '__all_'
+        fields = ['slug', 'name', 'geofence']
 
 
 class RouteSerializer(serializers.ModelSerializer):
