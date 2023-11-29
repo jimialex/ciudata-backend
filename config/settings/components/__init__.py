@@ -9,7 +9,9 @@ APPS_PATH = join(PROJECT_PATH, 'apps')
 
 env = environ.Env()
 READ_ENV_FILE = env.bool('DJANGO_READ_DOT_ENV_FILE', default=False)
+print("\n DJANGO_READ_DOT_ENV_FILE", READ_ENV_FILE)
 if READ_ENV_FILE:
     # OS environment variables take precedence over variables from .env
     env_file = join(PROJECT_PATH, '.env')
     env.read_env(env_file)
+    print("\n ", env)
