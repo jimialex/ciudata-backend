@@ -3,7 +3,7 @@
 from django.urls import path
 from apps.ciudata.api.v1.views.route import *
 from apps.ciudata.api.v1.views import (ConversorApiView, UsersViewSet,
-                                       VehiclesViewSet, VehicleViewSet)
+                                       VehiclesViewSet)
 
 
 app_name = 'ciudata'
@@ -22,6 +22,13 @@ urlpatterns = [
         }),
         name='conversor',
     ),
+    path(  # Users detail
+        'users/<username>/',
+        UsersViewSet.as_view({
+            'get': 'retrieve'
+        }),
+        name='conversor',
+    ),
     # >> Vehicles
     path(  # Vehicles List & Create
         'vehicles/',
@@ -32,7 +39,7 @@ urlpatterns = [
     ),
     path(  # Vehicles Update, Retieve & Delete
         'vehicles/<slug>/',
-        VehicleViewSet.as_view({
+        VehiclesViewSet.as_view({
             'get': 'retrieve', 'put': 'update', 'delete': 'destroy'
         }),
         name='conversor',
@@ -66,6 +73,21 @@ urlpatterns = [
             'get': 'retrieve', 'put': 'update', 'delete': 'destroy'
         }),
         name='route-detail-update-delete',
+    ),
+    # >> Assigned Routes
+    path(  # Assigned Routes List & Create
+        'assigned-routes/',
+        AssignedRouteViewSet.as_view({
+            'get': 'list', 'post': 'create'
+        }),
+        name='assigned-route-create-list',
+    ),
+    path(  # Assigned Routes Update, Retieve & Delete
+        'assigned-routes/<slug>/',
+        AssignedRouteViewSet.as_view({
+            'get': 'retrieve', 'put': 'update', 'delete': 'destroy'
+        }),
+        name='assigned-route-detail-update-delete',
     ),
 
 ]

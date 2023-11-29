@@ -1,6 +1,32 @@
 from rest_framework import serializers
 
-from apps.ciudata.models import Area, Route, AssignedRoute
+from apps.ciudata.models import Area, Route
+
+from apps.accounts.models import User
+
+
+class UsersSimpleSerializer(serializers.ModelSerializer):
+    """Helps to print the useer basic info."""
+    groups = serializers.SerializerMethodField()  # serializers.ListField(child=serializers.CharField(max_length=255))
+
+    def get_groups(self, user):
+        if user.groups.exists():
+            return [group.name for group in user.groups.all()]
+        else:
+            return []
+
+    class Meta:
+        model = User
+        fields = (
+            'id',
+            'username',
+            'email',
+            'first_name',
+            'last_name',
+            'photo',
+            'groups',
+        )
+        read_only_fields = fields
 
 
 class AreaSerializer(serializers.ModelSerializer):
@@ -21,7 +47,15 @@ class RouteSerializer(serializers.ModelSerializer):
         ]
 
 
-class AssignedRoute(serializers.ModelSerializer):
+class RouteResponseSerializer(serializers.ModelSerializer):
+    area = AreaSerializer()
+
     class Meta:
-        model = AssignedRoute
-        fields = '__all_'
+        model = Route
+        fields = [
+            'id',
+            'slug',
+            'name',
+            'area',
+            'geo_route',
+        ]

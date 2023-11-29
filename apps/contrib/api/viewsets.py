@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
 
+from rest_framework import filters
+from rest_framework.permissions import IsAuthenticated
+from rest_framework import status
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.exceptions import ValidationError
 from rest_framework import mixins
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework import status, pagination
@@ -55,7 +60,7 @@ class ModelRetrieveUpdateDeleteListViewSet(  # noqa: WPS215
     mixins.RetrieveModelMixin,
     mixins.UpdateModelMixin,
     mixins.DestroyModelMixin,
-    mixins.ListModelMixin,
+    # mixins.ListModelMixin,
     GenericViewSet,
 ):
     """Enables retrieve and update methods with permissions."""
@@ -75,6 +80,7 @@ class ModelCreateListViewSet(  # noqa: WPS215
     mixins.ListModelMixin,
     GenericViewSet,
 ):
+
     """Enables list and createe methods with permissions."""
 
 
@@ -106,3 +112,20 @@ class MixinPagination(pagination.PageNumberPagination):
 
     def set_page_size(self, size):
         self.page_size = size
+
+
+class BaseViewset(PermissionViewSet, ModelCreateListViewSet, ModelRetrieveUpdateDeleteListViewSet):
+    permission_classes = [IsAuthenticated]
+    pagination_class = MixinPagination
+    filter_backends = [filters.SearchFilter,
+                       filters.OrderingFilter,
+                       DjangoFilterBackend]
+    response_serializer_class = None
+
+    def get_serializer(self, *args, **kwargs):
+        if self.request.method in ["POST", "PUT"]:
+            return self.serializer_class(*args, **kwargs)
+        elif self.request.method == "GET":
+            return self.response_serializer_class(*args, **kwargs)
+        else:
+            raise ValidationError("Método HTTP no soportado")
