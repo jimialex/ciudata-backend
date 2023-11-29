@@ -29,7 +29,7 @@ env.read_env(env_file)
 
 DEBUG = False
 
-ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS')  # , default=["app.ciudata.io", '64.176.4.7'])
+ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=["app.ciudata.io", '64.176.4.7'])
 SECRET_KEY = env('DJANGO_SECRET_KEY', default="ToPwQx2sRijMzNT")
 
 #
