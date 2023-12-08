@@ -6,7 +6,8 @@ from apps.accounts.api.v1.views.email import EmailActionsViewSet
 from apps.accounts.api.v1.views.logout import LogoutView
 from apps.accounts.api.v1.views.profile import ProfileViewSet
 from apps.accounts.api.v1.views.register import RegisterView
-from apps.accounts.api.v1.views.login import LoginView, GoogleLoginView, FacebookLoginView
+from apps.accounts.api.v1.views.login import (LoginView, GoogleLoginView,
+                                              FacebookLoginView, TokenVerifyAPIView)
 from apps.accounts.api.v1.views.password import PasswordActionsViewSet
 
 app_name = 'accounts'
@@ -30,6 +31,11 @@ urlpatterns = [
     ),
 
     # >> Authentication
+    path(
+        'auth/verify-token/',
+        TokenVerifyAPIView.as_view(),
+        name='verify-token',
+    ),
     path(
         'auth/login/',
         LoginView.as_view(),
