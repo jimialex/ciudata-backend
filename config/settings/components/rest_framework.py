@@ -80,7 +80,9 @@ SIMPLE_JWT = {
 
     "ALGORITHM": "HS256",
     "SIGNING_KEY": env('DJANGO_SECRET_KEY', default='default_secret_key'),
-    "VERIFYING_KEY": None,
+    "VERIFYING_KEY":  # In the given code, `None` is used as a placeholder value for certain
+    # configuration options in the `SIMPLE_JWT` dictionary.
+    None,
     "AUDIENCE": None,
     "ISSUER": None,
     "JSON_ENCODER": None,

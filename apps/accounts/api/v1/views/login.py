@@ -93,10 +93,10 @@ class TokenVerifyAPIView(TokenVerifyView):
 
     def post(self, request, *args, **kwargs):
         if (request.headers['Authorization'] is not None):
-            # print("\n\n headers: ", request.headers['Authorization'])
+            print("\n\n headers: ", request.headers['Authorization'])
             _token = request.headers['Authorization']
             token = _token.split()[1]
-            # print("\n\n data: ", token)
+            print("\n\n data: ", token)
         else:
             token = request.data.get('token')
 
@@ -108,13 +108,12 @@ class TokenVerifyAPIView(TokenVerifyView):
             user_id = access_token['user_id']
             user = User.objects.get(id=user_id)
 
-            refresh = RefreshToken.for_user(user)
-            response_data = {
+            # refresh = RefreshToken.for_user(user)
+            """response_data = {
                 'access': str(access_token),
                 'refresh': str(refresh),
                 'profile': UserProfileSerializer(user).data
-
-            }
+            }"""
 
             return Response(SessionSerializer(user).data, status=status.HTTP_200_OK)
         except Exception as e:
