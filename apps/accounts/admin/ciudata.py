@@ -5,8 +5,8 @@ from apps.ciudata.models import *
 
 
 @admin.register(Area)
-class Areadmin(admin.ModelAdmin):
-    """Defines the phone device admin behaviour."""
+class AreaAdmin(admin.ModelAdmin):
+    """Defines the Area admin behaviour."""
 
     list_display = (
         'name',
@@ -15,8 +15,8 @@ class Areadmin(admin.ModelAdmin):
 
 
 @admin.register(Route)
-class Routedmin(admin.ModelAdmin):
-    """Defines the phone device admin behaviour."""
+class RouteAdmin(admin.ModelAdmin):
+    """Defines the Route admin behaviour."""
 
     list_display = (
         'name',
@@ -26,8 +26,8 @@ class Routedmin(admin.ModelAdmin):
 
 
 @admin.register(AssignedRoute)
-class AssignedRoutedmin(admin.ModelAdmin):
-    """Defines the phone device admin behaviour."""
+class AssignedRouteAdmin(admin.ModelAdmin):
+    """Defines the Assigned Route admin behaviour."""
 
     list_display = (
         'user',
@@ -43,8 +43,8 @@ class AssignedRoutedmin(admin.ModelAdmin):
 
 
 @admin.register(Vehicle)
-class Vehicledmin(admin.ModelAdmin):
-    """Defines the phone device admin behaviour."""
+class VehicleAdmin(admin.ModelAdmin):
+    """Defines the Vehicle admin behaviour."""
 
     list_display = (
         'plate',
@@ -57,8 +57,8 @@ class Vehicledmin(admin.ModelAdmin):
 
 
 @admin.register(AssignedVehicle)
-class AssignedVehicledmin(admin.ModelAdmin):
-    """Defines the phone device admin behaviour."""
+class AssignedVehicleAdmin(admin.ModelAdmin):
+    """Defines the Assigned Vehicle admin behaviour."""
 
     list_display = (
         'user',
@@ -66,4 +66,16 @@ class AssignedVehicledmin(admin.ModelAdmin):
         'detail',
         'assigned_date',
         'metadata',
+    )
+
+
+@admin.register(Tracking)
+class TrackingAdmin(admin.ModelAdmin):
+    """Defines the Tracking admin behaviour."""
+
+    list_display = (
+        'assigned_route',
+        'datetime',
+        'lat',
+        'lng',
     )

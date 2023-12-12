@@ -3,7 +3,7 @@
 from django.urls import path
 from apps.ciudata.api.v1.views.route import *
 from apps.ciudata.api.v1.views import (ConversorApiView, UsersViewSet,
-                                       VehiclesViewSet)
+                                       VehiclesViewSet, TrackingsViewSet)
 
 
 app_name = 'ciudata'
@@ -88,6 +88,21 @@ urlpatterns = [
             'get': 'retrieve', 'put': 'update', 'delete': 'destroy'
         }),
         name='assigned-route-detail-update-delete',
+    ),
+    # >> Tracking
+    path(  # Assigned Routes List & Create
+        'tracking/',
+        TrackingsViewSet.as_view({
+            'get': 'list', 'post': 'create'
+        }),
+        name='tracking-create-list',
+    ),
+    path(  # Assigned Routes Update, Retieve & Delete
+        'tracking/<int:pk>/',
+        TrackingsViewSet.as_view({
+            'get': 'retrieve', 'put': 'update', 'delete': 'destroy'
+        }),
+        name='tracking-detail-update-delete',
     ),
 
 ]
