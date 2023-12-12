@@ -59,3 +59,26 @@ class AssignedRouteCompleteSerializer(serializers.ModelSerializer):
             'completed_detail',
             'completed_date',
         ]
+
+
+class AssignedRouteSimpleSerializer(serializers.ModelSerializer):
+    user = serializers.SerializerMethodField()
+    # user = UsersSimpleSerializer()
+    route = serializers.SerializerMethodField()
+
+    def get_route(self, obj):
+        return obj.route.name
+
+    def get_user(self, obj):
+        return obj.user.username
+
+    class Meta:
+        model = AssignedRoute
+        fields = [
+            'id',
+            'slug',
+            'route',
+            'user',
+            'assigned_date',
+            'status',
+        ]

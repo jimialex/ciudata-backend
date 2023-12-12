@@ -11,7 +11,7 @@ CREATED = "CREATED"
 class TrackingsViewSet(BaseViewset):
     """Contains all Tracking endpoints."""
     serializer_class = TrackingSerializer
-    response_serializer_class = TrackingSerializer
+    response_serializer_class = TrackingResponseSerializer
     search_fields = ['datetime', 'assigned_route']
     filterset_fields = ['datetime']
     ordering_fields = '__all__'
