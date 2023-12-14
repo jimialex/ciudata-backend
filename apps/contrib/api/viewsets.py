@@ -114,8 +114,10 @@ class MixinPagination(pagination.PageNumberPagination):
         self.page_size = size
 
 
-class BaseViewset(PermissionViewSet, ModelCreateListViewSet, ModelRetrieveUpdateDeleteListViewSet):
-    permission_classes = [IsAuthenticated]
+# class BaseViewset(PermissionViewSet, ModelCreateListViewSet, ModelRetrieveUpdateDeleteListViewSet):
+class BaseViewset(ModelCreateListViewSet,
+                  ModelRetrieveUpdateDeleteListViewSet):
+    # permission_classes = [IsAuthenticated]
     pagination_class = MixinPagination
     filter_backends = [filters.SearchFilter,
                        filters.OrderingFilter,

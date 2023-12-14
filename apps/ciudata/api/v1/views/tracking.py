@@ -16,3 +16,4 @@ class TrackingsViewSet(BaseViewset):
     filterset_fields = ['datetime']
     ordering_fields = '__all__'
     queryset = Tracking.objects.all()
+    pagination_class = None

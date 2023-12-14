@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from rest_framework import serializers
+from rest_framework import serializers, permissions
 
 from apps.accounts.models import User
 from apps.ciudata.api.v1.serializers.vehicle import *
@@ -13,9 +13,15 @@ class UserProfileSerializer(serializers.ModelSerializer):
     has_password = serializers.SerializerMethodField()
     groups = serializers.SerializerMethodField()  # serializers.ListField(child=serializers.CharField(max_length=255))
     assigned_vehicle = serializers.SerializerMethodField()
+    user_permissions = serializers.SerializerMethodField()
+    permission_classes = (permissions.IsAuthenticated,)
 
     def get_has_password(self, user):
         return user.has_usable_password()
+
+    def get_user_permissions(self, obj):
+        perm_list = obj.get_all_permissions()
+        return list(perm_list)
 
     def get_groups(self, user):
         if user.groups.exists():
@@ -44,5 +50,6 @@ class UserProfileSerializer(serializers.ModelSerializer):
             'has_password',
             'groups',
             'assigned_vehicle',
+            'user_permissions',
         )
         read_only_fields = fields

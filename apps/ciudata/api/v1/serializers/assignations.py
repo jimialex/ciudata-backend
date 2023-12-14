@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from apps.ciudata.models import Area, Route, AssignedRoute
+from apps.ciudata.models import Area, Tracking, AssignedRoute
 from apps.ciudata.api.v1.serializers.route import RouteSerializer, UsersSimpleSerializer
 
 
@@ -40,9 +40,24 @@ class AssignedRouteResponseSerializer(serializers.ModelSerializer):
         ]
 
 
+class TrackingSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Tracking
+        fields = ['lat', 'lng', 'datetime']
+
+
 class AssignedRouteCompleteSerializer(serializers.ModelSerializer):
     user = UsersSimpleSerializer()
     route = RouteSerializer()
+    traking_assigned_route = serializers.SerializerMethodField()
+
+    def get_traking_assigned_route(self, obj):
+        """Return all points in traking for Assigned route"""
+        if obj.traking_assigned_route is not None:
+            points = obj.traking_assigned_route.all()
+            return TrackingSerializer(points, many=True).data
+        return {}
 
     class Meta:
         model = AssignedRoute
@@ -58,6 +73,7 @@ class AssignedRouteCompleteSerializer(serializers.ModelSerializer):
             'metadata',
             'completed_detail',
             'completed_date',
+            'traking_assigned_route',
         ]
 
 

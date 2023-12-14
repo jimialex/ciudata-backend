@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from apps.contrib.api.viewsets import (BaseViewset)
+from apps.contrib.api.viewsets import (BaseViewset, PermissionModelViewSet)
 from apps.ciudata.api.v1.serializers.users import UsersSerializer
 from apps.accounts.models.user import User
 

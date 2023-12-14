@@ -74,9 +74,21 @@ AUTH_PASSWORD_VALIDATORS = [
 # SECURE_HSTS_SECONDS = 31536000  # the same as Caddy has
 # SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 # SECURE_HSTS_PRELOAD = True
+CORS_ALLOW_ALL_ORIGINS = True
 
+USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_SSL_REDIRECT = False
+
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://app.ciudata.io',
+]
+
+CORS_ALLOW_ORIGINS = [
+    '*',
+    'http://localhost:4200',
+]
 
 # SESSION_COOKIE_SECURE = True
 # CSRF_COOKIE_SECURE = True
@@ -113,7 +125,3 @@ AWS_S3_CUSTOM_DOMAIN = '{0}.s3.amazonaws.com'.format(AWS_S3_BUCKET_NAME)
 STATIC_URL = 'https://{0}/static/'.format(AWS_S3_CUSTOM_DOMAIN)
 MEDIA_URL = 'https://{0}/media/'.format(AWS_S3_CUSTOM_DOMAIN)
 """
-
-CSRF_TRUSTED_ORIGINS = [
-    'https://app.ciudata.io',
-]

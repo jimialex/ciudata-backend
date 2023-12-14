@@ -7,7 +7,7 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenVerifyView
 )
-from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
+from rest_framework_simplejwt.tokens import AccessToken, RefreshToken, Token
 
 
 from apps.accounts.api.v1.serializers.login import LoginSerializer
@@ -92,28 +92,25 @@ class TokenVerifyAPIView(TokenVerifyView):
         return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        if (request.headers['Authorization'] is not None):
-            print("\n\n headers: ", request.headers['Authorization'])
+        print("\n\n headers: ", request.headers)
+        authorization = request.headers.get('Authorization', None)
+        if (authorization is not None):
             _token = request.headers['Authorization']
             token = _token.split()[1]
-            print("\n\n data: ", token)
         else:
             token = request.data.get('token')
 
-        if not token:
+        print("\n\n token: ", token)
+
+        if token is None:
             return Response({'error': 'Token is missing.'}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            access_token = AccessToken(token)
+            # access_token = AccessToken(token)
+            access_token = Token.verify(token)
+            print("TOCKEN VERIFICADO: ", access_token)
             user_id = access_token['user_id']
             user = User.objects.get(id=user_id)
-
-            # refresh = RefreshToken.for_user(user)
-            """response_data = {
-                'access': str(access_token),
-                'refresh': str(refresh),
-                'profile': UserProfileSerializer(user).data
-            }"""
 
             return Response(SessionSerializer(user).data, status=status.HTTP_200_OK)
         except Exception as e:

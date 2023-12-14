@@ -125,6 +125,10 @@ class AssignedRoute(TimeStampedModelMixin, Slug10ModelMixin):
     def __str__(self):
         return f"{self.user.username} {self.route}"
 
+    @property
+    def get_traking(self):
+        return self.traking_assigned_route.all()
+
     class Meta:
         db_table = 'asigned_route'
         verbose_name = _('Ruta asignada')
