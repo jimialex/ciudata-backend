@@ -106,8 +106,7 @@ class TokenVerifyAPIView(TokenVerifyView):
             return Response({'error': 'Token is missing.'}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            # access_token = AccessToken(token)
-            access_token = Token.verify(token)
+            access_token = AccessToken(token)
             print("TOCKEN VERIFICADO: ", access_token)
             user_id = access_token['user_id']
             user = User.objects.get(id=user_id)
