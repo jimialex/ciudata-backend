@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from rest_framework import status
 
 from django.db.models import Q
 from apps.contrib.api.viewsets import (BaseViewset, )
@@ -30,8 +31,8 @@ class RoutesViewSet(BaseViewset):
     """Contains all users endpoints."""
     serializer_class = RouteSerializer
     response_serializer_class = RouteResponseSerializer
-    search_fields = ['name', 'area__name',]
-    filterset_fields = ['name', 'route_assigned__status']
+    search_fields = ['name', 'area__name', 'route__slug']
+    filterset_fields = ['name', 'route_assigned__status', 'route__slug']
     ordering_fields = '__all__'
     queryset = Route.objects.filter(db_status=CREATED)
     lookup_field = 'slug'
@@ -73,9 +74,9 @@ class AssignedRouteViewSet(BaseViewset):
     response_serializer_class = AssignedRouteCompleteSerializer
     search_fields = [
         'user__username', 'user__first_name',
-        'user__last_name', 'route__name',
+        'user__last_name', 'route__name', 'route__slug'
     ]
-    filterset_fields = ['status',]
+    filterset_fields = ['status', 'route__slug']
     queryset = AssignedRoute.objects.filter()
     lookup_field = 'slug'
 
@@ -83,3 +84,10 @@ class AssignedRouteViewSet(BaseViewset):
         instance = self.get_object()
         self.perform_destroy(instance)
         return DoneResponse(**codes.ROUTE_DELETED)
+
+    def create(self, request, *args, **kwargs):
+        serializer = AssignedRouteCreateSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)

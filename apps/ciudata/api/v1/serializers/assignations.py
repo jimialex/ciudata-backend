@@ -1,9 +1,49 @@
+# Django & DRF
+from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
-from apps.ciudata.models import Area, Tracking, AssignedRoute
+
+# Serializers
 from apps.ciudata.api.v1.serializers.route import RouteSerializer, UsersSimpleSerializer
+
+# Models
+from apps.accounts.models import User
+from apps.ciudata.models import (Area, Tracking, AssignedRoute,
+                                 Route, ASSIGNED, COMPLETED)
+
+
+class AssignedRouteCreateSerializer(serializers.ModelSerializer):
+    route = serializers.PrimaryKeyRelatedField(queryset=Route.objects.all())
+    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
+
+    def validate(self, data):
+        route = data['route']
+        if route.route_assigned.exists():
+            # verificamos su la ruta asignada tiene alguna asignacion sin completar
+            if (route.route_assigned.filter(status=ASSIGNED).exists()):
+                raise serializers.ValidationError({'route': [_('Route is already assigned.')]})
+
+        return data
+
+    class Meta:
+        model = AssignedRoute
+        fields = [
+            'slug',
+            'user',
+            'route',
+            'assigned_detail',
+            'assigned_date',
+            'status',
+            'completed_detail',
+            'completed_date',
+            'geo_route',
+            'metadata',
+        ]
 
 
 class AssignedRouteSerializer(serializers.ModelSerializer):
+    route = serializers.PrimaryKeyRelatedField(queryset=Route.objects.all())
+    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
+
     class Meta:
         model = AssignedRoute
         fields = [

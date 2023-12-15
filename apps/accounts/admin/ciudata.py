@@ -20,6 +20,7 @@ class RouteAdmin(admin.ModelAdmin):
 
     list_display = (
         'name',
+        'id',
         'area',
         'db_status',
         # 'geo_route',
