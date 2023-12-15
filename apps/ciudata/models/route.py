@@ -60,17 +60,18 @@ class Route(TimeStampedModelMixin, Slug10ModelMixin, DeletionMixin):
         app_label = 'ciudata'
 
 
-ASSIGNED = "Asigned"
-COMPLETED = "Comleted"
-CANCELLED = "Deleted"
+CREATED = "CREATED"
+ASSIGNED = "ASSIGNED"
+COMPLETED = "COMPLETED"
+CANCELLED = "CANCELLED"
 
 
 class AssignedRoute(TimeStampedModelMixin, Slug10ModelMixin):
     """ This class is to Assigned Route model"""
     STATUS_KINDS = (
-        (ASSIGNED, "Asigned"),
-        (COMPLETED, "Comleted"),
-        (CANCELLED, "Deleted"),
+        (ASSIGNED, "ASSIGNED"),
+        (COMPLETED, "COMPLETED"),
+        (CANCELLED, "CANCELLED"),
     )
     user = models.ForeignKey(
         'accounts.User',
@@ -98,7 +99,7 @@ class AssignedRoute(TimeStampedModelMixin, Slug10ModelMixin):
         verbose_name=_("Estado de asignación"),
         max_length=20,
         choices=STATUS_KINDS,
-        default=CREATED
+        default=ASSIGNED
     )
 
     completed_detail = models.TextField(

@@ -21,7 +21,8 @@ class RouteAdmin(admin.ModelAdmin):
     list_display = (
         'name',
         'area',
-        'geo_route',
+        'db_status',
+        # 'geo_route',
     )
 
 
@@ -40,6 +41,9 @@ class AssignedRouteAdmin(admin.ModelAdmin):
         'geo_route',
         'metadata',
     )
+    list_editable = [
+        'status'
+    ]
 
 
 @admin.register(Vehicle)

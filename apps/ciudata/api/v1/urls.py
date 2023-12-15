@@ -67,6 +67,13 @@ urlpatterns = [
         }),
         name='route-create-list',
     ),
+    path(  # Routes List unassigned
+        'routes/unassigned/',
+        RoutesViewSet.as_view({
+            'get': 'list_unassigned'
+        }),
+        name='route-unassigned-list',
+    ),
     path(  # Routes Update, Retieve & Delete
         'routes/<slug>/',
         RoutesViewSet.as_view({
