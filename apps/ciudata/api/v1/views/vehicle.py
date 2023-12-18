@@ -16,7 +16,7 @@ CREATED = "CREATED"
 class VehiclesViewSet(BaseViewset, PermissionViewSet):
     """Contains all users endpoints."""
 
-    pagination_class = None
+    # pagination_class = None
     permission_classes = [IsAuthenticated,]
     serializer_class = VehicleSerializer
     response_serializer_class = VehicleSerializer

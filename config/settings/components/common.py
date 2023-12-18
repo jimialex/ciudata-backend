@@ -272,3 +272,25 @@ PROJECT_SUPPORT_PHONE = '(+591) 73234523'
 PROJECT_TERMS_URL = '{0}/terms'.format(PROJECT_HOSTNAME)
 
 # sudo ifconfig lo:0 10.10.10.10 netmask 255.255.255.0 up
+
+# CORS_ALLOW_ALL_ORIGINS = True
+# USE_X_FORWARDED_HOST = True
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# SECURE_SSL_REDIRECT = False
+
+
+"""CSRF_TRUSTED_ORIGINS = [
+    'https://app.ciudata.io',
+]"""
+
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_ORIGINS = [
+    '*',
+    'http://localhost:4200',
+]
+CORS_ORIGIN_WHITELIST = [
+    '*',
+    'http://localhost:4200',
+]

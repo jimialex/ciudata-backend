@@ -32,7 +32,7 @@ class RoutesViewSet(BaseViewset):
     serializer_class = RouteSerializer
     response_serializer_class = RouteResponseSerializer
     search_fields = ['name', 'area__name', 'route__slug']
-    filterset_fields = ['name', 'route_assigned__status', 'route__slug']
+    filterset_fields = ['name', 'route_assigned__status',]
     ordering_fields = '__all__'
     queryset = Route.objects.filter(db_status=CREATED)
     lookup_field = 'slug'

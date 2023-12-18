@@ -107,7 +107,6 @@ class TokenVerifyAPIView(TokenVerifyView):
 
         try:
             access_token = AccessToken(token)
-            print("TOCKEN VERIFICADO: ", access_token)
             user_id = access_token['user_id']
             user = User.objects.get(id=user_id)
 
