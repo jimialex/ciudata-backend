@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from django.contrib.auth.models import Group
 from rest_framework import serializers, permissions
 
 from apps.accounts.models import User
@@ -53,3 +54,9 @@ class UserProfileSerializer(serializers.ModelSerializer):
             'user_permissions',
         )
         read_only_fields = fields
+
+
+class GroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Group
+        fields = ('id', 'name')

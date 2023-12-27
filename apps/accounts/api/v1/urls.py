@@ -4,7 +4,7 @@ from django.urls import path
 
 from apps.accounts.api.v1.views.email import EmailActionsViewSet
 from apps.accounts.api.v1.views.logout import LogoutView
-from apps.accounts.api.v1.views.profile import ProfileViewSet
+from apps.accounts.api.v1.views.profile import ProfileViewSet, GroupsViewSet
 from apps.accounts.api.v1.views.register import RegisterView
 from apps.accounts.api.v1.views.login import (LoginView, GoogleLoginView,
                                               FacebookLoginView, TokenVerifyAPIView)
@@ -65,6 +65,16 @@ urlpatterns = [
         'auth/logout/',
         LogoutView.as_view(),
         name='logout',
+    ),
+
+    # >> Users
+
+    path(
+        'groups/',
+        GroupsViewSet.as_view({
+            'get': 'list'
+        }),
+        name='groups-list',
     ),
 
     # >> Users

@@ -1,22 +1,25 @@
 # -*- coding: utf-8 -*-
 
+# Django
+from django.contrib.auth import update_session_auth_hash
+
+# Django Rest Framework
 from rest_framework.permissions import AllowAny, IsAuthenticated
 
+# Project
+from apps.contrib.api.viewsets import PermissionViewSet
+from apps.contrib.api.responses import DoneResponse
 from apps.accounts import response_codes
 from apps.accounts.api.v1.serializers.user_profile import UserProfileSerializer
 from apps.accounts.models.choices import ActionCategory
 from apps.accounts.selectors.pending_action_selector import PendingActionSelector
 from apps.accounts.selectors.user_selector import UserSelector
 from apps.accounts.services.password import PasswordService
-from apps.contrib.api.viewsets import PermissionViewSet
-from apps.contrib.api.responses import DoneResponse
 from apps.accounts.services.auth import AuthEmailService
 from apps.accounts.api.v1.serializers.password import (
     PasswordSetSerializer, PasswordResetSerializer,
     PasswordUpdateSerializer, PasswordResetConfirmSerializer,
 )
-
-from django.contrib.auth import update_session_auth_hash
 
 
 class PasswordActionsViewSet(PermissionViewSet):

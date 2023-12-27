@@ -279,9 +279,11 @@ PROJECT_TERMS_URL = '{0}/terms'.format(PROJECT_HOSTNAME)
 # SECURE_SSL_REDIRECT = False
 
 
-"""CSRF_TRUSTED_ORIGINS = [
+"""
+CSRF_TRUSTED_ORIGINS = [
     'https://app.ciudata.io',
-]"""
+]
+"""
 
 
 CORS_ORIGIN_ALLOW_ALL = True

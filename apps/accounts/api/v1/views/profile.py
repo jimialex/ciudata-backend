@@ -1,12 +1,17 @@
 # -*- coding: utf-8 -*-
 
+# Django
+from django.contrib.auth.models import Group
+
+# Django Rest Framework
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 
+# Project
+from apps.contrib.api.viewsets import ModelListViewSet, PermissionViewSet
 from apps.accounts.api.v1.serializers.user import UserUpdateSerializer, UserCreateSerializer
-from apps.accounts.api.v1.serializers.user_profile import UserProfileSerializer
-from apps.contrib.api.viewsets import PermissionViewSet
+from apps.accounts.api.v1.serializers.user_profile import UserProfileSerializer, GroupSerializer
 from apps.accounts.services.user import UserService
 from apps.accounts.models.user import User
 
@@ -42,3 +47,11 @@ class ProfileViewSet(PermissionViewSet):
 
         new_user = UserService.register_new_user(serializer.validated_data, is_active=True)
         return Response(self.get_serializer(new_user).data, status=status.HTTP_200_OK)
+
+
+class GroupsViewSet(ModelListViewSet, PermissionViewSet):
+    """Contains Group's list endpoints."""
+
+    serializer_class = GroupSerializer
+    permission_classes = [IsAuthenticated]
+    queryset = Group.objects.all()
