@@ -117,3 +117,4 @@ class User(AbstractUser):
         verbose_name = _('User')
         verbose_name_plural = _('Users')
         app_label = 'accounts'
+        ordering = ['-id']

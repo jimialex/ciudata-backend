@@ -42,8 +42,10 @@ class UserService:
         user.set_password(plain_password)
         user.save()
 
+        print("Grupo in: ", group)
         if group:
-            user.groups.set(group)
+            groups = [Group.objects.get(pk=group.id)]
+            user.groups.set(groups)
 
         return user
 

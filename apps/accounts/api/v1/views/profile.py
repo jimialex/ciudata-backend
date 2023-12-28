@@ -41,7 +41,7 @@ class ProfileViewSet(PermissionViewSet):
 
     def create_profile(self, request, *args, **kwargs):
         """Crete new user"""
-
+        print("DATA: ", request.data)
         serializer = UserCreateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
