@@ -38,3 +38,4 @@ class Tracking(TimeStampedModelMixin):
         verbose_name = _('Trackeo')
         verbose_name_plural = _('Trackeos')
         app_label = 'ciudata'
+        ordering = ["-created_at"]

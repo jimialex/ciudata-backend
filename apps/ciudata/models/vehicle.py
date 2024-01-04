@@ -55,6 +55,7 @@ class Vehicle(TimeStampedModelMixin, Slug10ModelMixin, DeletionMixin):
         verbose_name = _('Vehículo')
         verbose_name_plural = _('Vehículos')
         app_label = 'ciudata'
+        ordering = ["-created_at"]
 
 
 class AssignedVehicle(TimeStampedModelMixin):
@@ -94,3 +95,4 @@ class AssignedVehicle(TimeStampedModelMixin):
         verbose_name = _('Vehículo asignado')
         verbose_name_plural = _('Vehículos asignados')
         app_label = 'ciudata'
+        ordering = ["-created_at"]

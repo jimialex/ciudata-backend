@@ -44,11 +44,25 @@ class RouteSerializer(serializers.ModelSerializer):
             'name',
             'area',
             'geo_route',
+            'metadata',
         ]
 
 
 class RouteResponseSerializer(serializers.ModelSerializer):
     area = AreaSerializer()
+    status = serializers.SerializerMethodField()
+    route_assigned = serializers.SerializerMethodField()
+
+    def get_route_assigned(self, obj):
+        if obj.route_assigned.exists():
+            assigned = obj.route_assigned.filter(status="ASSIGNED").values('user__username', 'assigned_date')
+            return assigned
+        return None
+
+    def get_status(self, obj):
+        if obj.route_assigned.exists():
+            return obj.route_assigned.first().status
+        return None
 
     class Meta:
         model = Route
@@ -56,6 +70,9 @@ class RouteResponseSerializer(serializers.ModelSerializer):
             'id',
             'slug',
             'name',
+            'status',
+            'metadata',
+            'route_assigned',
             'area',
             'geo_route',
         ]

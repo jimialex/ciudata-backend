@@ -2,9 +2,11 @@
 
 from django.db import models
 
-from apps.contrib.models.mixins import *
 from django.db.models import JSONField
 from django.utils.translation import gettext_lazy as _
+from django.core.serializers.json import DjangoJSONEncoder
+
+from apps.contrib.models.mixins import *
 
 
 class Area(TimeStampedModelMixin, Slug10ModelMixin, DeletionMixin):
@@ -49,6 +51,11 @@ class Route(TimeStampedModelMixin, Slug10ModelMixin, DeletionMixin):
         help_text=_('Ingresar un array de jsons [{lat : --,lng : --}]'),
         blank=True, null=True,
     )
+    metadata = JSONField(
+        encoder=DjangoJSONEncoder,
+        verbose_name=_('Metadata'),
+        blank=True, default=dict,
+    )
 
     def __str__(self):
         return self.name
@@ -58,6 +65,7 @@ class Route(TimeStampedModelMixin, Slug10ModelMixin, DeletionMixin):
         verbose_name = _('Ruta')
         verbose_name_plural = _('Rutas')
         app_label = 'ciudata'
+        ordering = ["-created_at"]
 
 
 CREATED = "CREATED"
@@ -119,8 +127,10 @@ class AssignedRoute(TimeStampedModelMixin, Slug10ModelMixin):
     )
 
     metadata = JSONField(
+        encoder=DjangoJSONEncoder,
         verbose_name=_('Metadata'),
         blank=True, null=True,
+        default=dict,
     )
 
     def __str__(self):
@@ -135,3 +145,4 @@ class AssignedRoute(TimeStampedModelMixin, Slug10ModelMixin):
         verbose_name = _('Ruta asignada')
         verbose_name_plural = _('Rutas asignadas')
         app_label = 'ciudata'
+        ordering = ["-created_at"]
