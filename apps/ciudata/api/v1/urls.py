@@ -25,9 +25,9 @@ urlpatterns = [
     path(  # Users detail
         'users/<username>/',
         UsersViewSet.as_view({
-            'get': 'retrieve'
+            'get': 'retrieve', 'put': 'update'
         }),
-        name='conversor',
+        name='detail-edit-user',
     ),
     # >> Vehicles
     path(  # Vehicles List & Create

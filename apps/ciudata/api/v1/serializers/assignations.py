@@ -21,7 +21,6 @@ class AssignedRouteCreateSerializer(serializers.ModelSerializer):
             # verificamos su la ruta asignada tiene alguna asignacion sin completar
             if (route.route_assigned.filter(status=ASSIGNED).exists()):
                 raise serializers.ValidationError({'route': [_('Route is already assigned.')]})
-
         return data
 
     class Meta:
