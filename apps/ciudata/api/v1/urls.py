@@ -25,7 +25,7 @@ urlpatterns = [
     path(  # Users detail
         'users/<username>/',
         UsersViewSet.as_view({
-            'get': 'retrieve', 'put': 'update'
+            'get': 'retrieve', 'put': 'update', 'delete': 'destroy'
         }),
         name='detail-edit-user',
     ),

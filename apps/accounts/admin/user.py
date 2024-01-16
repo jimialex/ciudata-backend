@@ -69,3 +69,4 @@ class UserAdmin(AuthUserAdmin):
         'lang',
     ]
 
+    list_editable = ('is_active', )

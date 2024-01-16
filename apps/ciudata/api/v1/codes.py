@@ -60,6 +60,12 @@ PASSWORD_UPDATED = {
     "status": status.HTTP_201_CREATED
 }
 
+USER_DELETED = {
+    "code": "user_deleted",
+    "detail": _("Usuario Eliminado"),
+    "status": status.HTTP_204_NO_CONTENT
+}
+
 VEHICLE_DELETED = {
     "code": "vehicle_deleted",
     "detail": _("Vehículo Eliminado"),

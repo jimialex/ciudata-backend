@@ -127,7 +127,7 @@ class BaseViewset(ModelCreateListViewSet,
     def get_serializer(self, *args, **kwargs):
         if self.request.method in ["POST", "PUT"]:
             return self.serializer_class(*args, **kwargs)
-        elif self.request.method == "GET":
+        elif self.request.method in ["GET", "DELETE"]:
             return self.response_serializer_class(*args, **kwargs)
         else:
             raise ValidationError("Método HTTP no soportado")
