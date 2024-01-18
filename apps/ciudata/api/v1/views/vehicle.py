@@ -4,7 +4,8 @@
 from apps.contrib.api.viewsets import (BaseViewset,
                                        PermissionViewSet,
                                        MixinPagination)
-from apps.ciudata.api.v1.serializers.vehicle import VehicleSerializer
+from apps.ciudata.api.v1.serializers.vehicle import (VehicleSerializer, AssignedVehicleCreateSerializer,
+                                                     AssignedVehicleResponseSerializer)
 from apps.ciudata.models.vehicle import *
 from apps.contrib.api.responses import DoneResponse
 from apps.ciudata.api.v1 import codes
@@ -32,3 +33,19 @@ class VehiclesViewSet(BaseViewset, PermissionViewSet):
         instance = self.get_object()
         self.perform_destroy(instance)
         return DoneResponse(**codes.VEHICLE_DELETED)
+
+
+class AssignedVehiclesViewSet(BaseViewset, PermissionViewSet):
+    """Contains all users endpoints."""
+
+    # pagination_class = None
+    permission_classes = [IsAuthenticated,]
+    serializer_class = AssignedVehicleCreateSerializer
+    response_serializer_class = AssignedVehicleResponseSerializer
+    search_fields = [
+        'user', 'vehicle', 'detail', 'assigned_date',
+    ]
+    filterset_fields = ['user__username']
+    ordering_fields = '__all__'
+    queryset = AssignedVehicle.objects.all()
+    # lookup_field = 'pk'

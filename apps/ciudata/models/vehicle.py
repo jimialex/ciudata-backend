@@ -2,11 +2,12 @@
 
 from django.db import models
 
-from apps.contrib.models.mixins import *
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
 from django.utils.translation import gettext_lazy as _
 from django.db.models import JSONField
+from django.core.serializers.json import DjangoJSONEncoder
+from apps.contrib.models.mixins import *
 from apps.contrib.utils.strings import get_uuid
 
 
@@ -43,8 +44,10 @@ class Vehicle(TimeStampedModelMixin, Slug10ModelMixin, DeletionMixin):
     )
 
     metadata = JSONField(
+        encoder=DjangoJSONEncoder,
         verbose_name=_('Metadata'),
         blank=True, null=True,
+        default=dict,
     )
 
     def __str__(self):
@@ -83,8 +86,10 @@ class AssignedVehicle(TimeStampedModelMixin):
     )
 
     metadata = JSONField(
+        encoder=DjangoJSONEncoder,
         verbose_name=_('Metadata'),
         blank=True, null=True,
+        default=dict,
     )
 
     def __str__(self):

@@ -2,7 +2,7 @@
 
 from django.urls import path
 from apps.ciudata.api.v1.views.route import *
-from apps.ciudata.api.v1.views import (ConversorApiView, UsersViewSet,
+from apps.ciudata.api.v1.views import (ConversorApiView, UsersViewSet, AssignedVehiclesViewSet,
                                        VehiclesViewSet, TrackingsViewSet)
 
 
@@ -43,6 +43,21 @@ urlpatterns = [
             'get': 'retrieve', 'put': 'update', 'delete': 'destroy'
         }),
         name='conversor',
+    ),
+    # >> Assigned Vehicles
+    path(  # Assigned Vehicle List & Create
+        'assigned-vehicles/',
+        AssignedVehiclesViewSet.as_view({
+            'get': 'list', 'post': 'create'
+        }),
+        name='assigned-vehicle-create-list',
+    ),
+    path(  # Assigned Vehicle List & Create
+        'assigned-vehicles/<int:pk>/',
+        AssignedVehiclesViewSet.as_view({
+            'get': 'retrieve', 'delete': 'destroy', 'put': 'update',
+        }),
+        name='assigned-vehicle-detail-update-delete',
     ),
     # >> Areas
     path(  # Areas List & Create

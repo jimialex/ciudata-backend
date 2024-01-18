@@ -4,6 +4,7 @@ from django.db import models
 
 from apps.contrib.models.mixins import *
 from django.db.models import JSONField
+from django.core.serializers.json import DjangoJSONEncoder
 from django.utils.translation import gettext_lazy as _
 
 
@@ -28,6 +29,12 @@ class Tracking(TimeStampedModelMixin):
 
     lng = models.FloatField(
         verbose_name=_('Longitud'),
+    )
+    metadata = JSONField(
+        encoder=DjangoJSONEncoder,
+        verbose_name=_('Metadata'),
+        blank=True, null=True,
+        default=dict,
     )
 
     def __str__(self):
