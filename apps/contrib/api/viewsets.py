@@ -125,9 +125,14 @@ class BaseViewset(ModelCreateListViewSet,
     response_serializer_class = None
 
     def get_serializer(self, *args, **kwargs):
+        """
+        Return the serializer instance that should be used for validating and
+        deserializing input, and for serializing output.
+        """
         if self.request.method in ["POST", "PUT"]:
-            return self.serializer_class(*args, **kwargs)
+            serializer_class = self.get_serializer_class()
+            kwargs.setdefault('context', self.get_serializer_context())
+            return serializer_class(*args, **kwargs)
         elif self.request.method in ["GET", "DELETE"]:
+            kwargs.setdefault('context', self.get_serializer_context())
             return self.response_serializer_class(*args, **kwargs)
-        else:
-            raise ValidationError("Método HTTP no soportado")

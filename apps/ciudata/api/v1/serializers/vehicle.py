@@ -41,20 +41,22 @@ class AssignedVehicleCreateSerializer(serializers.ModelSerializer):
         ]
 
     def validate(self, data):
-        user = data['user']
-        vehicle = data['vehicle']
+        request = self.context['request']
+        if request.method == 'POST':
+            user = data['user']
+            vehicle = data['vehicle']
 
-        # Valida que el vehículo no esté asignado a otro usuario
-        if AssignedVehicle.objects.filter(vehicle=vehicle).exists():
-            raise serializers.ValidationError(
-                {'vehicle': 'El vehículo ya está asignado a otro usuario.'}
-            )
+            # Valida que el vehículo no esté asignado a otro usuario
+            if AssignedVehicle.objects.filter(vehicle=vehicle).exists():
+                raise serializers.ValidationError(
+                    {'vehicle': 'El vehículo ya está asignado a otro usuario.'}
+                )
 
-        # Valida que el usuario no tenga asignado el vehículo
-        if AssignedVehicle.objects.filter(user=user, vehicle=vehicle).exists():
-            raise serializers.ValidationError(
-                {'user': 'El usuario ya tiene asignado un vehículo.'}
-            )
+            # Valida que el usuario no tenga asignado el vehículo
+            if AssignedVehicle.objects.filter(user=user, vehicle=vehicle).exists():
+                raise serializers.ValidationError(
+                    {'user': 'El usuario ya tiene asignado un vehículo.'}
+                )
 
         return data
 
