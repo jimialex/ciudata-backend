@@ -1,9 +1,34 @@
 from rest_framework import serializers
 
 from apps.ciudata.models import Vehicle, AssignedVehicle
+from apps.accounts.models import User
+
+
+class UsersSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = (
+            'id',
+            'username',
+            'email',
+            'first_name',
+            'last_name',
+            'photo',
+            'is_active',
+        )
 
 
 class VehicleSerializer(serializers.ModelSerializer):
+    conductor = serializers.SerializerMethodField(required=False)
+
+    def get_conductor(self, obj):
+        if obj.conductor.exists():
+            assigneds = obj.conductor.all().first()
+            print("Conductor:  ", assigneds)
+            return UsersSerializer(assigneds.user).data
+        else:
+            return None
+
     class Meta:
         model = Vehicle
         fields = [
@@ -15,6 +40,7 @@ class VehicleSerializer(serializers.ModelSerializer):
             'detail',
             'photo',
             'metadata',
+            'conductor',
             'db_status',
         ]
 
