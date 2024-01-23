@@ -92,15 +92,12 @@ class TokenVerifyAPIView(TokenVerifyView):
         return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        print("\n\n headers: ", request.headers)
         authorization = request.headers.get('Authorization', None)
         if (authorization is not None):
             _token = request.headers['Authorization']
             token = _token.split()[1]
         else:
             token = request.data.get('token')
-
-        print("\n\n token: ", token)
 
         if token is None:
             return Response({'error': 'Token is missing.'}, status=status.HTTP_400_BAD_REQUEST)

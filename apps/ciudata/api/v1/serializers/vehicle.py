@@ -24,7 +24,6 @@ class VehicleSerializer(serializers.ModelSerializer):
     def get_conductor(self, obj):
         if obj.conductor.exists():
             assigneds = obj.conductor.all().first()
-            print("Conductor:  ", assigneds)
             return UsersSerializer(assigneds.user).data
         else:
             return None
