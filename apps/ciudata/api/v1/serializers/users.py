@@ -7,6 +7,8 @@ from apps.ciudata.models import (ASSIGNED, COMPLETED)
 from apps.ciudata.api.v1.serializers.vehicle import *
 from apps.ciudata.api.v1.serializers.assignations import *
 from apps.accounts.api.v1.serializers.user_profile import GroupSerializer
+from rest_framework.serializers import raise_errors_on_nested_writes
+from django.contrib.auth.models import Group
 
 
 class UsersResponseSerializer(serializers.ModelSerializer):
@@ -84,7 +86,7 @@ class UsersResponseSerializer(serializers.ModelSerializer):
 class UsersSerializer(serializers.ModelSerializer):
     """Helps to print the useer basic info."""
     photo = serializers.CharField(source='photo_url', required=False)
-    groups = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    groups = serializers.PrimaryKeyRelatedField(queryset=Group.objects.all(), many=True)
 
     class Meta:
         model = User
