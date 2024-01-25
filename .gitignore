@@ -48,6 +48,7 @@ reports/flake8/*
 .environment
 .env
 django.json
+django_dev.json
 config/settings/local.py
 .envs/
 .retry
