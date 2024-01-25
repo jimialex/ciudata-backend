@@ -83,7 +83,7 @@ class TrackingSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Tracking
-        fields = ['lat', 'lng', 'datetime']
+        fields = ['lat', 'lng', 'datetime', 'metadata']
 
 
 class AssignedRouteCompleteSerializer(serializers.ModelSerializer):
