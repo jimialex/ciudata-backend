@@ -6,6 +6,16 @@ from apps.ciudata.api.v1.serializers.assignations import *
 
 
 class TrackingSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Tracking
+        fields = ['assigned_route', 'datetime',
+                  'lat', 'lng', 'metadata']
+
+
+class TrackingCreateSerializer(serializers.ModelSerializer):
+    assigned_route = serializers.PrimaryKeyRelatedField(queryset=AssignedRoute.objects.all())
+
     class Meta:
         model = Tracking
         fields = ['assigned_route', 'datetime',
@@ -18,4 +28,4 @@ class TrackingResponseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tracking
         fields = ['assigned_route', 'datetime',
-                  'lat', 'lng',]
+                  'lat', 'lng', 'metadata']

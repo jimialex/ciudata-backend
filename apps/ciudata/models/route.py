@@ -140,6 +140,10 @@ class AssignedRoute(TimeStampedModelMixin, Slug10ModelMixin):
     def get_traking(self):
         return self.traking_assigned_route.all()
 
+    def completing(self):
+        self.status = COMPLETED
+        self.save()
+
     class Meta:
         db_table = 'asigned_route'
         verbose_name = _('Ruta asignada')

@@ -111,6 +111,13 @@ urlpatterns = [
         }),
         name='assigned-route-detail-update-delete',
     ),
+    path(  # Assigned Routes add tracking
+        'assigned-routes/<slug>/tracking/',
+        AssignedRouteViewSet.as_view({
+            'put': 'add_tracking'
+        }),
+        name='assigned-route-add-tracking',
+    ),
     # >> Tracking
     path(  # Assigned Routes List & Create
         'tracking/',

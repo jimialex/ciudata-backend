@@ -5,6 +5,7 @@ from django.db.models import Q
 from apps.contrib.api.viewsets import (BaseViewset, )
 from apps.contrib.api.responses import DoneResponse, Response
 from apps.ciudata.api.v1.serializers.route import *
+from apps.ciudata.api.v1.serializers.tracking import TrackingCreateSerializer
 from apps.ciudata.api.v1.serializers.assignations import *
 from apps.ciudata.models.route import *
 from apps.ciudata.api.v1 import codes
@@ -91,3 +92,19 @@ class AssignedRouteViewSet(BaseViewset):
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+    def add_tracking(self, request, *args, **kwargs):
+        instance = self.get_object()
+        _tracking = request.data['traking_assigned_route']
+        for item in _tracking:
+            _data = {"assigned_route": instance.id, **item}
+
+            _serializer = None
+            _serializer = TrackingCreateSerializer(data=_data)
+            _serializer.is_valid(raise_exception=True)
+            _serializer.save()
+
+        instance.completing()
+        serializer = AssignedRouteCompleteSerializer(instance)
+
+        return Response(serializer.data)
