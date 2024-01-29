@@ -3,7 +3,7 @@
 from django.urls import path
 from apps.ciudata.api.v1.views.route import *
 from apps.ciudata.api.v1.views import (ConversorApiView, UsersViewSet, AssignedVehiclesViewSet,
-                                       VehiclesViewSet, TrackingsViewSet)
+                                       VehiclesViewSet, TrackingsViewSet, ExportViewSet)
 
 
 app_name = 'ciudata'
@@ -132,6 +132,11 @@ urlpatterns = [
             'get': 'retrieve', 'put': 'update', 'delete': 'destroy'
         }),
         name='tracking-detail-update-delete',
+    ),
+    path(  # Exporta lista de rutas asignadas en formato EXCEL
+        'assigned-routes/export/xls/',
+        ExportViewSet.as_view({'get': 'xls_export'}),
+        name='xls_export'
     ),
 
 ]
