@@ -88,6 +88,10 @@ class User(AbstractUser):
     def __str__(self):
         return self.email
 
+    def delete(self):
+        self.is_active = False
+        self.save()
+
     def save(self, *args, **kwargs):
         if self.username is None or self.username.strip() == '':
             self.username = self.email

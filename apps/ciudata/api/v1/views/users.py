@@ -25,21 +25,3 @@ class UsersViewSet(BaseViewset):
     ordering_fields = '__all__'
     queryset = User.objects.filter(is_active=True)
     lookup_field = 'username'
-
-    def perform_destroy(self, instance):
-        instance.is_active = False
-        instance.save()
-        # instance.delete()
-
-    def destroy(self, request, *args, **kwargs):
-        instance = self.get_object()
-        self.perform_destroy(instance)
-        queryset = self.filter_queryset(self.get_queryset())
-
-        page = self.paginate_queryset(queryset)
-        if page is not None:
-            serializer = self.get_serializer(page, many=True)
-            return self.get_paginated_response(serializer.data)
-
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
