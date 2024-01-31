@@ -103,6 +103,12 @@ class User(AbstractUser):
         return full_name.strip()
 
     @property
+    def get_fullname(self):
+        if (self.first_name and self.last_name):
+            return f"{self.first_name} {self.last_name}"
+        return str(self.username)
+
+    @property
     def photo_url(self):
         return clean_static_url(self.photo.url) if self.photo else None
 

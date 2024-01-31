@@ -165,7 +165,6 @@ class XLS():
         self.write_user_data(worksheet)
         # self.write_totales(worksheet)
 
-        # Escribimos los Incomes
         worksheet.write(self.line, 0,
                         "RUTAS COMPLETADAS", subtitle)
         self.add_line()
@@ -178,7 +177,6 @@ class XLS():
 
         for i, inc in enumerate(self.data["routes_travled"]):
             self.write_row_incomes(inc, worksheet, i + self.line)
-
 
         self.add_line()
 

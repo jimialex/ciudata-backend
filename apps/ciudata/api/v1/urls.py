@@ -3,7 +3,8 @@
 from django.urls import path
 from apps.ciudata.api.v1.views.route import *
 from apps.ciudata.api.v1.views import (ConversorApiView, UsersViewSet, AssignedVehiclesViewSet,
-                                       VehiclesViewSet, TrackingsViewSet, ExportViewSet)
+                                       VehiclesViewSet, TrackingsViewSet, ExportViewSet,
+                                       DashboardRoutesViewSet)
 
 
 app_name = 'ciudata'
@@ -138,5 +139,12 @@ urlpatterns = [
         ExportViewSet.as_view({'get': 'xls_export'}),
         name='xls_export'
     ),
-
+    # >> Dashboard Routes
+    path(  # Dashboard Routes List
+        'dashboard/routes/',
+        DashboardRoutesViewSet.as_view({
+            'get': 'list'
+        }),
+        name='dashboard-route-list',
+    ),
 ]

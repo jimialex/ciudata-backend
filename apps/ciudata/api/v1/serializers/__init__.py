@@ -3,3 +3,4 @@ from .assignations import *
 from .users import *
 from .vehicle import *
 from .tracking import *
+from .dashboard import *
