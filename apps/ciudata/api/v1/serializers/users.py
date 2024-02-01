@@ -91,10 +91,14 @@ class UsersResponseSerializer(serializers.ModelSerializer):
 class UsersSerializer(serializers.ModelSerializer):
     """Helps to print the useer basic info."""
     photo = serializers.ImageField(required=False)
+    photo_simple = serializers.SerializerMethodField(required=False, read_only=True)
     email = serializers.EmailField(required=False)
     username = serializers.CharField(required=False)
     is_active = serializers.CharField(read_only=True)
     groups = serializers.PrimaryKeyRelatedField(queryset=Group.objects.all(), many=True)
+
+    def get_photo_simple(self, user):
+        return str(user.photo) if user.photo else None
 
     class Meta:
         model = User
@@ -105,6 +109,7 @@ class UsersSerializer(serializers.ModelSerializer):
             'first_name',
             'last_name',
             'photo',
+            'photo_simple',
             'lang',
             'is_active',
             'groups',
