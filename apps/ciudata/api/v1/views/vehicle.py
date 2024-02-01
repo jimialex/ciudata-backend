@@ -34,6 +34,13 @@ class VehiclesViewSet(BaseViewset, PermissionViewSet):
         self.perform_destroy(instance)
         return DoneResponse(**codes.VEHICLE_DELETED)
 
+    def perform_destroy(self, instance):
+        if instance.conductor.exists():
+            assigned = instance.conductor.first()
+            assignement = AssignedVehicle.objects.get(pk=assigned.id)
+            assignement.delete()
+        instance.delete()
+
 
 class AssignedVehiclesViewSet(BaseViewset, PermissionViewSet):
     """Contains all users endpoints."""

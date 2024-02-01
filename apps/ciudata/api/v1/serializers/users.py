@@ -15,6 +15,7 @@ class UsersResponseSerializer(serializers.ModelSerializer):
     """Helps to print the useer basic info."""
 
     photo = serializers.CharField(source='photo_url', required=False)
+    photo_simple = serializers.SerializerMethodField()
     # serializers.ListField(child=serializers.CharField(max_length=255))
     groups = serializers.SerializerMethodField(required=False)
     assigned_vehicle = serializers.SerializerMethodField(required=False)
@@ -22,6 +23,9 @@ class UsersResponseSerializer(serializers.ModelSerializer):
     completed_route = serializers.SerializerMethodField(required=False)
     distance_assigned = serializers.SerializerMethodField(required=False)
     groups_objects = serializers.SerializerMethodField()
+
+    def get_photo_simple(self, user):
+        return str(user.photo) if user.photo else None
 
     def get_groups(self, user):
         group_names = user.groups.values_list('name', flat=True)  # Obtiene solo los nombres en una consulta
@@ -70,6 +74,7 @@ class UsersResponseSerializer(serializers.ModelSerializer):
             'email',
             'first_name',
             'last_name',
+            'photo_simple',
             'photo',
             'lang',
             'is_active',
