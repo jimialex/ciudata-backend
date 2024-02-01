@@ -11,11 +11,15 @@ class UserProfileSerializer(serializers.ModelSerializer):
     """Helps to print the useer basic info."""
 
     photo = serializers.CharField(source='photo_url')
+    photo_simple = serializers.SerializerMethodField()
     has_password = serializers.SerializerMethodField()
     groups = serializers.SerializerMethodField()  # serializers.ListField(child=serializers.CharField(max_length=255))
     assigned_vehicle = serializers.SerializerMethodField()
     user_permissions = serializers.SerializerMethodField()
     permission_classes = (permissions.IsAuthenticated,)
+
+    def get_photo_simple(self, user):
+        return str(user.photo) if user.photo else None
 
     def get_has_password(self, user):
         return user.has_usable_password()
@@ -46,6 +50,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
             'first_name',
             'last_name',
             'photo',
+            'photo_simple',
             'lang',
             'is_active',
             'has_password',
