@@ -10,6 +10,8 @@ class UserService:
     @classmethod
     def update_profile(cls, user, changes):
         """Updates some fields of the user instance."""
+        group = changes.pop('groups', None)
+
         if 'username' in changes:
             user.username = changes.get('username')
 
@@ -23,6 +25,13 @@ class UserService:
             if changes.get('photo') is not None:
                 _photo = changes.get('photo')
                 user.photo.save(_photo.name, _photo)
+
+        if type(group) != list:
+            groups = [Group.objects.get(pk=group.id)]
+            user.groups.set(groups)
+        else:
+            user.groups.set(group)
+
         user.save()
         user.refresh_from_db()
 
@@ -42,10 +51,11 @@ class UserService:
         user.set_password(plain_password)
         user.save()
 
-        print("Grupo in: ", group)
-        if group:
+        if type(group) != list:
             groups = [Group.objects.get(pk=group.id)]
             user.groups.set(groups)
+        else:
+            user.groups.set(group)
 
         return user
 

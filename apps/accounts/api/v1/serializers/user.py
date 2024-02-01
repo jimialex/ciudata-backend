@@ -45,7 +45,16 @@ class UserUpdateSerializer(serializers.ModelSerializer):
 
 
 class UserCreateSerializer(serializers.ModelSerializer):
-    groups = serializers.PrimaryKeyRelatedField(queryset=Group.objects.all(), many=False)
+    groups = serializers.CharField(required=False)
+
+    def validate_groups(self, groups):
+        """Valida la existencia de los grupos y devuelve una lista de instancias de Group."""
+        groups_str = groups.split(",")
+        groups_pk = [eval(i) for i in groups_str]
+        group_instances = Group.objects.filter(pk__in=groups_pk)
+        if len(group_instances) != len(groups_pk):
+            raise ValidationError("Uno o más grupos no existen.")
+        return groups_pk
 
     class Meta:
         model = User

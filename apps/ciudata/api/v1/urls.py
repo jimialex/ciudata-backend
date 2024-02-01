@@ -147,4 +147,11 @@ urlpatterns = [
         }),
         name='dashboard-route-list',
     ),
+    path(  # Dashboard Routes List
+        'dashboard/areas/<int:pk>/',
+        DashboardRoutesViewSet.as_view({
+            'get': 'list'
+        }),
+        name='dashboard-route-list',
+    ),
 ]

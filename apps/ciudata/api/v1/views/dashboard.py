@@ -42,3 +42,14 @@ class AssignedRouteViewSet(BaseViewset):
     filterset_fields = ['status', 'route__slug']
     queryset = AssignedRoute.objects.filter()
     lookup_field = 'slug'
+
+
+class DashboardAreasViewSet(BaseViewset):
+    """Contains all users endpoints."""
+    serializer_class = SimpleDashboardRouteSerializer
+    response_serializer_class = SimpleDashboardRouteSerializer
+    search_fields = ['name', 'area__name', 'route__slug', 'route_assigned__status']
+    filterset_fields = ['name', 'route_assigned__status',]
+    ordering_fields = ['id', 'created_at', 'route_assigned__assigned_date', 'route_assigned__completed_date']
+    queryset = Area.objects.filter(db_status=CREATED)
+    lookup_field = 'slug'

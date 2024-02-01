@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
+
 from django.db.models import Sum
 from apps.accounts.models import User
 from apps.ciudata.models import (ASSIGNED, COMPLETED)
@@ -95,10 +97,31 @@ class UsersSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(required=False)
     username = serializers.CharField(required=False)
     is_active = serializers.CharField(read_only=True)
-    groups = serializers.PrimaryKeyRelatedField(queryset=Group.objects.all(), many=True)
+    # groups = serializers.PrimaryKeyRelatedField(queryset=Group.objects.all(), many=True)
+    groups = serializers.CharField(required=False)
+    groups_objects = serializers.SerializerMethodField(required=False)
+
+    def validate_groups(self, groups):
+        """Valida la existencia de los grupos y devuelve una lista de instancias de Group."""
+        groups_str = groups.split(",")
+        groups_pk = [eval(i) for i in groups_str]
+        group_instances = Group.objects.filter(pk__in=groups_pk)
+        if len(group_instances) != len(groups_pk):
+            raise ValidationError("Uno o más grupos no existen.")
+        return groups_pk
 
     def get_photo_simple(self, user):
         return str(user.photo) if user.photo else None
+
+    def get_groups(self, user):
+        group_names = user.groups.values_list('name', flat=True)  # Obtiene solo los nombres en una consulta
+        return list(group_names)  # Convierte el QuerySet a lista
+
+    def get_groups_objects(self, user):
+        if user.groups.exists():
+            return GroupSerializer(user.groups.all(), many=True).data
+        else:
+            return None
 
     class Meta:
         model = User
@@ -113,4 +136,5 @@ class UsersSerializer(serializers.ModelSerializer):
             'lang',
             'is_active',
             'groups',
+            'groups_objects',
         )
