@@ -4,7 +4,7 @@ from django.urls import path
 from apps.ciudata.api.v1.views.route import *
 from apps.ciudata.api.v1.views import (ConversorApiView, UsersViewSet, AssignedVehiclesViewSet,
                                        VehiclesViewSet, TrackingsViewSet, ExportViewSet,
-                                       DashboardRoutesViewSet)
+                                       DashboardRoutesViewSet, DashboardAreasViewSet)
 
 
 app_name = 'ciudata'
@@ -148,9 +148,16 @@ urlpatterns = [
         name='dashboard-route-list',
     ),
     path(  # Dashboard Routes List
-        'dashboard/areas/<int:pk>/',
-        DashboardRoutesViewSet.as_view({
+        'dashboard/areas/',
+        DashboardAreasViewSet.as_view({
             'get': 'list'
+        }),
+        name='dashboard-route-list',
+    ),
+    path(  # Dashboard Routes List
+        'dashboard/areas/<slug:slug>/',
+        DashboardAreasViewSet.as_view({
+            'get': 'retrieve'
         }),
         name='dashboard-route-list',
     ),

@@ -80,3 +80,19 @@ class SimpleDashboardRouteSerializer(serializers.ModelSerializer):
             'assignments',
             'geo_route',
         ]
+
+
+class DashboardAreaSerializer(serializers.ModelSerializer):
+    number_of_routes = serializers.SerializerMethodField(required=False)
+
+    def get_number_of_routes(self, obj):
+        return obj.route_area.all().count()
+
+    class Meta:
+        model = Area
+        fields = [
+            'id',
+            'slug',
+            'name',
+            'number_of_routes',
+        ]
