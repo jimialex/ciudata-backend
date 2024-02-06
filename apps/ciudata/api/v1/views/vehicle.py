@@ -70,8 +70,11 @@ class AssignedVehiclesViewSet(BaseViewset, PermissionViewSet):
     # lookup_field = 'pk'
 
     def unasigned_user_vehicle(self, request):
+        print("\n\n request remove vehicle ", request.data)
         try:
-            assigned = self.get_queryset().get(user=request.data['user'], vehicle=request.data['vehicle'])
+            user = request.data.get('user')
+            vehicle = request.data.get('vehicle')
+            assigned = self.get_queryset().get(user=user, vehicle=vehicle)
             if assigned:
                 assigned.delete()
             return DoneResponse(**codes.USER_VEHICLE_DELETED)
