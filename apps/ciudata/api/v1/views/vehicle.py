@@ -68,3 +68,12 @@ class AssignedVehiclesViewSet(BaseViewset, PermissionViewSet):
     ordering_fields = '__all__'
     queryset = AssignedVehicle.objects.all()
     # lookup_field = 'pk'
+
+    def unasigned_user_vehicle(self, request):
+        try:
+            assigned = self.get_queryset().get(user=request.data['user'], vehicle=request.data['vehicle'])
+            if assigned:
+                assigned.delete()
+            return DoneResponse(**codes.USER_VEHICLE_DELETED)
+        except AssignedVehicle.DoesNotExist:
+            return DoneResponse(**codes.USER_VEHICLE_NOT_FOUND)

@@ -66,6 +66,18 @@ USER_DELETED = {
     "status": status.HTTP_204_NO_CONTENT
 }
 
+USER_VEHICLE_NOT_FOUND = {
+    "code": "user_vehicle_not_found",
+    "detail": _("Usuario o vehículo sin asignación."),
+    "status": status.HTTP_404_NOT_FOUND
+}
+
+USER_VEHICLE_DELETED = {
+    "code": "user_vehicle_deleted",
+    "detail": _("Asignación removida."),
+    "status": status.HTTP_204_NO_CONTENT
+}
+
 VEHICLE_DELETED = {
     "code": "vehicle_deleted",
     "detail": _("Vehículo Eliminado"),

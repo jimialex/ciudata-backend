@@ -60,12 +60,19 @@ urlpatterns = [
         }),
         name='assigned-vehicle-create-list',
     ),
-    path(  # Assigned Vehicle List & Create
+    path(  # Assigned Vehicle detail, update & delete
         'assigned-vehicles/<int:pk>/',
         AssignedVehiclesViewSet.as_view({
             'get': 'retrieve', 'delete': 'destroy', 'put': 'update',
         }),
         name='assigned-vehicle-detail-update-delete',
+    ),
+    path(  # Unassigned Vehicle
+        'unassigned-user-vehicle/',
+        AssignedVehiclesViewSet.as_view({
+            'put': 'unasigned_user_vehicle',
+        }),
+        name='unassigned-vehicle',
     ),
     # >> Areas
     path(  # Areas List & Create

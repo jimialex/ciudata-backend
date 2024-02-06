@@ -102,7 +102,6 @@ class DashboardAreaStatisticsSerializer(serializers.ModelSerializer):
     number_of_routes = serializers.SerializerMethodField(required=False)
 
     def get_number_of_routes(self, obj):
-        print("\n RESPONSE")
         return obj.route_area.all().count()
 
     class Meta:
