@@ -38,6 +38,13 @@ urlpatterns = [
         }),
         name='conversor',
     ),
+    path(  # Vehicles List & Create
+        'vehicles/unassigned/',
+        VehiclesViewSet.as_view({
+            'get': 'unassigned'
+        }),
+        name='conversor',
+    ),
     path(  # Vehicles Update, Retieve & Delete
         'vehicles/<slug>/',
         VehiclesViewSet.as_view({

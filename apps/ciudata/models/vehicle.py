@@ -68,7 +68,7 @@ class AssignedVehicle(TimeStampedModelMixin):
         on_delete=models.CASCADE,
         related_name='assigned_vehicle',
     )
-
+    
     vehicle = models.ForeignKey(
         'Vehicle',
         on_delete=models.CASCADE,

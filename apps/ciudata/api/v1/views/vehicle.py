@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from apps.contrib.api.responses import Response
 
 # The class VehiclesViewSet is a combination of BaseViewset and PermissionViewSet.
 from apps.contrib.api.viewsets import (BaseViewset,
@@ -24,7 +25,7 @@ class VehiclesViewSet(BaseViewset, PermissionViewSet):
     search_fields = [
         'plate', 'brand', 'model',
     ]
-    filterset_fields = ['plate']
+    filterset_fields = ['plate', ]
     ordering_fields = '__all__'
     queryset = Vehicle.objects.filter(db_status=CREATED)
     lookup_field = 'slug'
@@ -40,6 +41,17 @@ class VehiclesViewSet(BaseViewset, PermissionViewSet):
             assignement = AssignedVehicle.objects.get(pk=assigned.id)
             assignement.delete()
         instance.delete()
+
+    def unassigned(self, request):
+        queryset = self.get_queryset().filter(conductor__isnull=True).distinct()
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 class AssignedVehiclesViewSet(BaseViewset, PermissionViewSet):
