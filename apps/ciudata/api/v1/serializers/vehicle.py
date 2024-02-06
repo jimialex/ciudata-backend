@@ -20,6 +20,7 @@ class UsersSerializer(serializers.ModelSerializer):
 
 class VehicleSerializer(serializers.ModelSerializer):
     conductor = serializers.SerializerMethodField(required=False)
+    photo_simple = serializers.SerializerMethodField()
 
     def get_conductor(self, obj):
         if obj.conductor.exists():
@@ -27,6 +28,9 @@ class VehicleSerializer(serializers.ModelSerializer):
             return UsersSerializer(assigneds.user).data
         else:
             return None
+
+    def get_photo_simple(self, obj):
+        return str(obj.photo) if obj.photo else None
 
     class Meta:
         model = Vehicle
@@ -38,6 +42,7 @@ class VehicleSerializer(serializers.ModelSerializer):
             'model',
             'detail',
             'photo',
+            'photo_simple',
             'metadata',
             'conductor',
             'db_status',
