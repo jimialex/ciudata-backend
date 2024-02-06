@@ -119,3 +119,14 @@ class AssignedVehicleResponseSerializer(serializers.ModelSerializer):
             'user_name',
             'vehicle_detail',
         ]
+
+
+class UnassignedVehicleSerializer(serializers.Serializer):
+    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
+    vehicle = serializers.PrimaryKeyRelatedField(queryset=Vehicle.objects.all())
+
+    class Meta:
+        fields = [
+            'user',
+            'vehicle',
+        ]

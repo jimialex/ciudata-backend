@@ -70,7 +70,7 @@ urlpatterns = [
     path(  # Unassigned Vehicle
         'unassigned-user-vehicle/',
         AssignedVehiclesViewSet.as_view({
-            'put': 'unasigned_user_vehicle',
+            'put': 'unassigned_user_vehicle',
         }),
         name='unassigned-vehicle',
     ),

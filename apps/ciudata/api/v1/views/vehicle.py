@@ -6,7 +6,7 @@ from apps.contrib.api.viewsets import (BaseViewset,
                                        PermissionViewSet,
                                        MixinPagination)
 from apps.ciudata.api.v1.serializers.vehicle import (VehicleSerializer, AssignedVehicleCreateSerializer,
-                                                     AssignedVehicleResponseSerializer)
+                                                     AssignedVehicleResponseSerializer, UnassignedVehicleSerializer)
 from apps.ciudata.models.vehicle import *
 from apps.contrib.api.responses import DoneResponse
 from apps.ciudata.api.v1 import codes
@@ -69,7 +69,8 @@ class AssignedVehiclesViewSet(BaseViewset, PermissionViewSet):
     queryset = AssignedVehicle.objects.all()
     # lookup_field = 'pk'
 
-    def unasigned_user_vehicle(self, request):
+    """
+    def unassigned_user_vehicle(self, request):
         print("\n\n request remove vehicle ", request.data)
         try:
             user = request.data.get('user')
@@ -77,6 +78,24 @@ class AssignedVehiclesViewSet(BaseViewset, PermissionViewSet):
             assigned = self.get_queryset().get(user=user, vehicle=vehicle)
             if assigned:
                 assigned.delete()
+            return DoneResponse(**codes.USER_VEHICLE_DELETED)
+        except AssignedVehicle.DoesNotExist:
+            return DoneResponse(**codes.USER_VEHICLE_NOT_FOUND)"""
+
+    def unassigned_user_vehicle(self, request):
+        """
+        Desasigna un vehículo a un usuario.
+        """
+
+        serializer = UnassignedVehicleSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)  # Valida los datos de entrada
+
+        user = serializer.validated_data['user']
+        vehicle = serializer.validated_data['vehicle']
+
+        try:
+            assigned_vehicle = self.get_queryset().filter(user=user, vehicle=vehicle).get()
+            assigned_vehicle.delete()
             return DoneResponse(**codes.USER_VEHICLE_DELETED)
         except AssignedVehicle.DoesNotExist:
             return DoneResponse(**codes.USER_VEHICLE_NOT_FOUND)
