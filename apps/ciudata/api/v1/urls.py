@@ -23,6 +23,13 @@ urlpatterns = [
         }),
         name='conversor',
     ),
+    path(  # Users vehicle unassigned List
+        'users/vehicleless/',
+        UsersViewSet.as_view({
+            'get': 'vehicleless'
+        }),
+        name='list-user-vehicleless',
+    ),
     path(  # Users detail
         'users/<username>/',
         UsersViewSet.as_view({
@@ -38,12 +45,12 @@ urlpatterns = [
         }),
         name='conversor',
     ),
-    path(  # Vehicles List & Create
-        'vehicles/unassigned/',
+    path(  # Vehicles Userless List
+        'vehicles/userless/',
         VehiclesViewSet.as_view({
-            'get': 'unassigned'
+            'get': 'userless'
         }),
-        name='conversor',
+        name='list-vehicle-userless',
     ),
     path(  # Vehicles Update, Retieve & Delete
         'vehicles/<slug>/',
@@ -67,7 +74,7 @@ urlpatterns = [
         }),
         name='assigned-vehicle-detail-update-delete',
     ),
-    path(  # Unassigned Vehicle
+    path(  # Unassigned Vehicle action
         'unassigned-user-vehicle/',
         AssignedVehiclesViewSet.as_view({
             'put': 'unassigned_user_vehicle',
@@ -153,7 +160,7 @@ urlpatterns = [
         ExportViewSet.as_view({'get': 'xls_export'}),
         name='xls_export'
     ),
-    # >> Dashboard Routes
+    # >> Dashboard
     path(  # Dashboard Routes List
         'dashboard/routes/',
         DashboardRoutesViewSet.as_view({

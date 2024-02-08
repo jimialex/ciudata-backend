@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from rest_framework import status
-from apps.contrib.api.responses import Response
+from apps.contrib.api.responses import Response, DoneResponse
 from apps.ciudata.api.v1 import codes
 
 from apps.contrib.api.viewsets import (BaseViewset, PermissionModelViewSet)
@@ -27,6 +27,11 @@ class UsersViewSet(BaseViewset):
     queryset = User.objects.filter(is_active=True)
     lookup_field = 'username'
 
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return DoneResponse(**codes.USER_DELETED)
+
     def perform_destroy(self, instance):
         if instance.assigned_vehicle.exists():
             assigned = instance.assigned_vehicle.first()
@@ -48,3 +53,14 @@ class UsersViewSet(BaseViewset):
 
     def perform_update(self, serializer):
         return serializer.save()
+
+    def vehicleless(self, request):
+        queryset = self.get_queryset().filter(assigned_vehicle__isnull=True).distinct()
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)

@@ -42,7 +42,7 @@ class VehiclesViewSet(BaseViewset, PermissionViewSet):
             assignement.delete()
         instance.delete()
 
-    def unassigned(self, request):
+    def userless(self, request):
         queryset = self.get_queryset().filter(conductor__isnull=True).distinct()
 
         page = self.paginate_queryset(queryset)
