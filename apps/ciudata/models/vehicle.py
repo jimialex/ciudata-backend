@@ -4,6 +4,7 @@ from django.db import models
 
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
+from django.core.validators import RegexValidator, MinLengthValidator, MaxLengthValidator
 from django.utils.translation import gettext_lazy as _
 from django.db.models import JSONField
 from django.core.serializers.json import DjangoJSONEncoder
@@ -17,6 +18,13 @@ class Vehicle(TimeStampedModelMixin, Slug10ModelMixin, DeletionMixin):
         verbose_name=_('Placa'),
         max_length=8,
         unique=True,
+        validators=[
+            MinLengthValidator(6),
+            MaxLengthValidator(7),
+            # Valida que los primeros 3 caracteres sean letras y el resto números
+            RegexValidator(r'^[A-Z]{3}[0-9]{3,4}$',
+                           _('The plate must have 3 capital letters at the beginning and then 3 or 4 numbers'))
+        ]
     )
 
     brand = models.CharField(
@@ -68,7 +76,7 @@ class AssignedVehicle(TimeStampedModelMixin):
         on_delete=models.CASCADE,
         related_name='assigned_vehicle',
     )
-    
+
     vehicle = models.ForeignKey(
         'Vehicle',
         on_delete=models.CASCADE,
