@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from django.db.models import Count
+from django.db.models import F, Max, Min
 from rest_framework import status
 from datetime import datetime, timedelta
 
@@ -64,6 +66,11 @@ class DashboardAreasViewSet(BaseViewset):
             "total_distance": self.get_total_distance(instance),
             "total_distance_tours": self.get_total_distance_tours(instance),
             "total_time_tour": self.get_total_time_tour(instance),
+            "total_average_speed": self.get_total_average_speed(instance),
+            "user_most_tour": self.get_user_most_tour(instance),
+            "vehicle_most_record": self.get_vehicle_most_record(instance),
+            "route_most_record": self.get_route_most_record(instance),
+            "route_less_record": self.get_route_less_record(instance),
         }
 
         return Response(data)
@@ -142,17 +149,19 @@ class DashboardAreasViewSet(BaseViewset):
                 total_time = total_time + time_difference
         return total_time
 
-    def get_total_average_tour_speed(self, assigneds):
+    def get_total_average_speed(self, assigneds):
         pass
 
-    def get_userm_most_tour(self, assigneds):
+    def get_user_most_tour(self, assigneds):
         pass
 
     def get_vehicle_most_record(self, assigneds):
         pass
 
-    def get_route_most_record(self, assigneds):
-        pass
+    def get_route_most_record(self, area):
+        route = area.route_area.annotate(amount=Count('route_assigned')).order_by('-amount').first()
+        return {"slug": route.slug, "name": route.name, "amount": route.amount} if route else None
 
-    def get_route_less_record(self, assigneds):
-        pass
+    def get_route_less_record(self, area):
+        route = area.route_area.annotate(amount=Count('route_assigned')).order_by('amount').first()
+        return {"slug": route.slug, "name": route.name, "amount": route.amount} if route else None

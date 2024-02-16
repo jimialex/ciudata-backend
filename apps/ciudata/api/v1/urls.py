@@ -173,13 +173,13 @@ urlpatterns = [
         DashboardAreasViewSet.as_view({
             'get': 'list'
         }),
-        name='dashboard-route-statistic',
+        name='dashboard-areas-statistic',
     ),
-    path(  # Dashboard Routes List
+    path(  # Dashboard Area detail statistics
         'dashboard/areas/<slug:slug>/',
         DashboardAreasViewSet.as_view({
             'get': 'retrieve'
         }),
-        name='dashboard-area-statistic',
+        name='dashboard-area-statistic-detail',
     ),
 ]
