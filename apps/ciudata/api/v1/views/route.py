@@ -32,7 +32,7 @@ class RoutesViewSet(BaseViewset):
     """Contains all users endpoints."""
     serializer_class = RouteSerializer
     response_serializer_class = RouteResponseSerializer
-    search_fields = ['name', 'area__name', 'route__slug']
+    search_fields = ['name', 'area__name', 'area__slug', 'route__slug']
     filterset_fields = ['name', 'route_assigned__status',]
     ordering_fields = '__all__'
     queryset = Route.objects.filter(db_status=CREATED)
@@ -74,10 +74,10 @@ class AssignedRouteViewSet(BaseViewset):
     serializer_class = AssignedRouteSerializer
     response_serializer_class = AssignedRouteCompleteSerializer
     search_fields = [
-        'user__username', 'user__first_name',
-        'user__last_name', 'route__name', 'route__slug'
+        'user__username', 'user__first_name', 'route__route_assigned__slug',
+        'user__last_name', 'route__name', 'route__slug', 'route__area__slug'
     ]
-    filterset_fields = ['status', 'route__slug']
+    filterset_fields = ['status', 'route__slug', 'route__area__slug']
     queryset = AssignedRoute.objects.filter()
     lookup_field = 'slug'
 
